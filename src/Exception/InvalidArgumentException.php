@@ -9,11 +9,12 @@
 
 namespace Dot\Rbac\Exception;
 
+
 /**
- * Interface ExceptionInterface
+ * Class InvalidArgumentException
  * @package Dot\Rbac\Exception
  */
-interface ExceptionInterface
+class InvalidArgumentException extends \InvalidArgumentException implements ExceptionInterface
 {
-    
+
 }

@@ -1,13 +1,15 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: n3vrax
- * Date: 5/13/2016
- * Time: 9:19 PM
+ * @copyright: DotKernel
+ * @library: dotkernel/dot-rbac
+ * @author: n3vrax
+ * Date: 5/18/2016
+ * Time: 1:55 PM
  */
 
 namespace Dot\Rbac\Role;
-use N3vrax\DkAuthorization\Role\RoleInterface;
+
+use Dot\Authorization\Role\RoleInterface;
 
 /**
  * A role provider is an object that collect roles from strings and convert them to RoleInterface instances
@@ -15,7 +17,7 @@ use N3vrax\DkAuthorization\Role\RoleInterface;
  * Data can come from anywhere, like a database or memory
  *
  * Interface RoleProviderInterface
- * @package N3vrax\DkRbac\Role
+ * @package Dot\Rbac\Role
  */
 interface RoleProviderInterface
 {

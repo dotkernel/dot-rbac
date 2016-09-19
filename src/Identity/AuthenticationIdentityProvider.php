@@ -1,16 +1,22 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: n3vra
- * Date: 5/15/2016
- * Time: 1:32 AM
+ * @copyright: DotKernel
+ * @library: dotkernel/dot-rbac
+ * @author: n3vrax
+ * Date: 5/18/2016
+ * Time: 1:55 PM
  */
 
 namespace Dot\Rbac\Identity;
 
-use N3vrax\DkAuthentication\AuthenticationInterface;
-use N3vrax\DkAuthorization\Identity\IdentityInterface;
+use Dot\Authentication\AuthenticationInterface;
+use Dot\Authentication\Identity\IdentityInterface;
+use Dot\Rbac\Exception\RuntimeException;
 
+/**
+ * Class AuthenticationIdentityProvider
+ * @package Dot\Rbac\Identity
+ */
 class AuthenticationIdentityProvider implements IdentityProviderInterface
 {
     /**
@@ -18,6 +24,10 @@ class AuthenticationIdentityProvider implements IdentityProviderInterface
      */
     protected $authentication;
 
+    /**
+     * AuthenticationIdentityProvider constructor.
+     * @param AuthenticationInterface $authentication
+     */
     public function __construct(AuthenticationInterface $authentication)
     {
         $this->authentication = $authentication;
@@ -30,8 +40,9 @@ class AuthenticationIdentityProvider implements IdentityProviderInterface
     public function getIdentity()
     {
         $identity = $this->authentication->getIdentity();
+
         if(!is_null($identity) && !$identity instanceof IdentityInterface) {
-            throw new \Exception(sprintf(
+            throw new RuntimeException(sprintf(
                 'Authenticated identity must be an instance of %s, "%s" given',
                 IdentityInterface::class,
                 is_object($identity) ? get_class($identity) : gettype($identity)

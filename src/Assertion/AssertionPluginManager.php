@@ -1,9 +1,10 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: n3vra
- * Date: 5/16/2016
- * Time: 2:36 PM
+ * @copyright: DotKernel
+ * @library: dotkernel/dot-rbac
+ * @author: n3vrax
+ * Date: 5/18/2016
+ * Time: 1:55 PM
  */
 
 namespace Dot\Rbac\Assertion;

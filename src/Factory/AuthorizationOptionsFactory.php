@@ -9,24 +9,21 @@
 
 namespace Dot\Rbac\Factory;
 
-use Dot\Rbac\Assertion\AssertionPluginManager;
+use Dot\Rbac\Options\AuthorizationOptions;
 use Interop\Container\ContainerInterface;
 
 /**
- * Class AssertionPluginManagerFactory
+ * Class AuthorizationOptionsFactory
  * @package Dot\Rbac\Factory
  */
-class AssertionPluginManagerFactory
+class AuthorizationOptionsFactory
 {
     /**
      * @param ContainerInterface $container
-     * @return AssertionPluginManager
+     * @return AuthorizationOptions
      */
     public function __invoke(ContainerInterface $container)
     {
-        $config = $container->get('config')['dot_authorization']['assertion_manager'];
-        $pluginManager = new AssertionPluginManager($container, $config);
-
-        return $pluginManager;
+        return new AuthorizationOptions($container->get('config')['dot_authorization']);
     }
 }

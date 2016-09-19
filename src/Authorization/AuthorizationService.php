@@ -1,21 +1,26 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: n3vrax
- * Date: 5/13/2016
- * Time: 9:46 PM
+ * @copyright: DotKernel
+ * @library: dotkernel/dot-rbac
+ * @author: n3vrax
+ * Date: 5/18/2016
+ * Time: 1:55 PM
  */
 
 namespace Dot\Rbac\Authorization;
 
+use Dot\Authentication\Identity\IdentityInterface;
+use Dot\Authorization\AuthorizationInterface;
 use Dot\Rbac\Assertion\AssertionInterface;
 use Dot\Rbac\Assertion\AssertionPluginManager;
+use Dot\Rbac\Exception\InvalidArgumentException;
 use Dot\Rbac\RbacInterface;
 use Dot\Rbac\Role\RoleService;
-use N3vrax\DkAuthorization\AuthorizationInterface;
-use N3vrax\DkAuthorization\Exception\RuntimeException;
-use N3vrax\DkAuthorization\Identity\IdentityInterface;
 
+/**
+ * Class AuthorizationService
+ * @package Dot\Rbac\Authorization
+ */
 class AuthorizationService implements AuthorizationInterface
 {
     /**
@@ -38,6 +43,12 @@ class AuthorizationService implements AuthorizationInterface
      */
     protected $assertions = [];
 
+    /**
+     * AuthorizationService constructor.
+     * @param RbacInterface $rbac
+     * @param RoleService $roleService
+     * @param AssertionPluginManager $assertionPluginManager
+     */
     public function __construct(
         RbacInterface $rbac,
         RoleService $roleService,
@@ -134,7 +145,7 @@ class AuthorizationService implements AuthorizationInterface
             return $assertion->assert($this, $context);
         }
 
-        throw new RuntimeException(sprintf(
+        throw new InvalidArgumentException(sprintf(
             'Assertion must be a callable or implement %s, "%s" given',
             AssertionInterface::class,
             is_object($assertion) ? get_class($assertion) : gettype($assertion)

@@ -1,16 +1,21 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: n3vra
- * Date: 5/21/2016
- * Time: 2:05 PM
+ * @copyright: DotKernel
+ * @library: dotkernel/dot-rbac
+ * @author: n3vrax
+ * Date: 5/18/2016
+ * Time: 1:55 PM
  */
 
 namespace Dot\Rbac\Options;
 
 use Zend\Stdlib\AbstractOptions;
 
-class ModuleOptions extends AbstractOptions
+/**
+ * Class AuthorizationOptions
+ * @package Dot\Rbac\Options
+ */
+class AuthorizationOptions extends AbstractOptions
 {
     /**
      * @var string
@@ -27,6 +32,10 @@ class ModuleOptions extends AbstractOptions
      */
     protected $roleProvider = [];
 
+    /**
+     * AuthorizationOptions constructor.
+     * @param array|null|\Traversable $options
+     */
     public function __construct($options)
     {
         $this->__strictMode__ = false;

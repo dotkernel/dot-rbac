@@ -1,15 +1,20 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: n3vrax
- * Date: 5/13/2016
- * Time: 7:15 PM
+ * @copyright: DotKernel
+ * @library: dotkernel/dot-rbac
+ * @author: n3vrax
+ * Date: 5/18/2016
+ * Time: 1:55 PM
  */
 
 namespace Dot\Rbac\Role;
 
-use N3vrax\DkAuthorization\Role\RoleInterface;
+use Dot\Authorization\Role\RoleInterface;
 
+/**
+ * Class HierarchicalRole
+ * @package Dot\Rbac\Role
+ */
 class HierarchicalRole extends Role implements HierarchicalRoleInterface
 {
     protected $children = [];

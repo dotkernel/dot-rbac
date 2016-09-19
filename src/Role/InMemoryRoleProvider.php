@@ -1,25 +1,39 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: n3vrax
- * Date: 5/17/2016
- * Time: 9:48 PM
+ * @copyright: DotKernel
+ * @library: dotkernel/dot-rbac
+ * @author: n3vrax
+ * Date: 5/18/2016
+ * Time: 1:55 PM
  */
 
 namespace Dot\Rbac\Role;
 
+/**
+ * Class InMemoryRoleProvider
+ * @package Dot\Rbac\Role
+ */
 class InMemoryRoleProvider implements RoleProviderInterface
 {
-
+    /** @var array  */
     protected $roles = [];
 
+    /** @var array  */
     protected $rolesConfig = [];
 
+    /**
+     * InMemoryRoleProvider constructor.
+     * @param array $config
+     */
     public function __construct(array $config)
     {
         $this->rolesConfig = $config;
     }
 
+    /**
+     * @param array $roleNames
+     * @return array
+     */
     public function getRoles(array $roleNames)
     {
         $roles = [];
@@ -32,6 +46,10 @@ class InMemoryRoleProvider implements RoleProviderInterface
         return $roles;
     }
 
+    /**
+     * @param $roleName
+     * @return HierarchicalRole|Role|mixed
+     */
     public function getRole($roleName)
     {
         if(isset($this->roles[$roleName])) {

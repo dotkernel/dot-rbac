@@ -1,18 +1,23 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: n3vrax
- * Date: 5/13/2016
- * Time: 9:50 PM
+ * @copyright: DotKernel
+ * @library: dotkernel/dot-rbac
+ * @author: n3vrax
+ * Date: 5/18/2016
+ * Time: 1:55 PM
  */
 
 namespace Dot\Rbac\Role;
 
+use Dot\Authorization\Identity\IdentityInterface;
+use Dot\Authorization\Role\RoleInterface;
+use Dot\Rbac\Exception\RuntimeException;
 use Dot\Rbac\Identity\IdentityProviderInterface;
-use N3vrax\DkAuthorization\Exception\RuntimeException;
-use N3vrax\DkAuthorization\Identity\IdentityInterface;
-use N3vrax\DkAuthorization\Role\RoleInterface;
 
+/**
+ * Class RoleService
+ * @package Dot\Rbac\Role
+ */
 class RoleService
 {
     /**

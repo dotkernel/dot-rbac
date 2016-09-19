@@ -1,7 +1,8 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: n3vra
+ * @copyright: DotKernel
+ * @library: dotkernel/dot-rbac
+ * @author: n3vrax
  * Date: 5/18/2016
  * Time: 1:55 PM
  */
@@ -13,19 +14,17 @@ use Dot\Rbac\Assertion\AssertionPluginManager;
 use Dot\Rbac\Factory\AssertionPluginManagerFactory;
 use Dot\Rbac\Factory\AuthenticationIdentityProviderFactory;
 use Dot\Rbac\Factory\AuthorizationServiceFactory;
-use Dot\Rbac\Factory\ModuleOptionsFactory;
+use Dot\Rbac\Factory\AuthorizationOptionsFactory;
 use Dot\Rbac\Factory\RoleProviderPluginManagerFactory;
 use Dot\Rbac\Factory\RoleServiceFactory;
 use Dot\Rbac\Identity\IdentityProviderInterface;
-use Dot\Rbac\Options\ModuleOptions;
+use Dot\Rbac\Options\AuthorizationOptions;
 use Dot\Rbac\Role\RoleProviderPluginManager;
 use Dot\Rbac\Role\RoleService;
 
 /**
- * Class ModuleConfig
- * Config provider to be used with mtymek/expressive-config-manager
- *
- * @package N3vrax\DkRbac
+ * Class ConfigProvider
+ * @package Dot\Rbac
  */
 class ConfigProvider
 {
@@ -33,9 +32,11 @@ class ConfigProvider
     {
         return [
             'dependencies' => [
+
                 'invokables' => [
                     RbacInterface::class => Rbac::class
                 ],
+
                 'factories' => [
                     IdentityProviderInterface::class => AuthenticationIdentityProviderFactory::class,
 
@@ -43,7 +44,7 @@ class ConfigProvider
 
                     RoleService::class => RoleServiceFactory::class,
 
-                    ModuleOptions::class => ModuleOptionsFactory::class,
+                    AuthorizationOptions::class => AuthorizationOptionsFactory::class,
 
                     AssertionPluginManager::class => AssertionPluginManagerFactory::class,
 
@@ -51,7 +52,8 @@ class ConfigProvider
                 ]
             ],
 
-            'dk_authorization' => [
+            'dot_authorization' => [
+
                 'guest_role' => 'guest',
 
                 'assertion_map' => [
