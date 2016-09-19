@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: n3vra
- * Date: 5/18/2016
- * Time: 2:14 PM
- */
 
 return [
     //this file contains some authorization example for default services
