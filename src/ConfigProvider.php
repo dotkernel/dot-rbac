@@ -19,8 +19,8 @@ use Dot\Rbac\Factory\RoleProviderPluginManagerFactory;
 use Dot\Rbac\Factory\RoleServiceFactory;
 use Dot\Rbac\Identity\IdentityProviderInterface;
 use Dot\Rbac\Options\AuthorizationOptions;
-use Dot\Rbac\Role\RoleProviderPluginManager;
-use Dot\Rbac\Role\RoleService;
+use Dot\Rbac\Role\Provider\RoleProviderPluginManager;
+use Dot\Rbac\Role\RoleServiceInterface;
 
 /**
  * Class ConfigProvider
@@ -42,7 +42,7 @@ class ConfigProvider
 
                     RoleProviderPluginManager::class => RoleProviderPluginManagerFactory::class,
 
-                    RoleService::class => RoleServiceFactory::class,
+                    RoleServiceInterface::class => RoleServiceFactory::class,
 
                     AuthorizationOptions::class => AuthorizationOptionsFactory::class,
 

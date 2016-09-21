@@ -7,7 +7,10 @@
  * Time: 1:55 PM
  */
 
-namespace Dot\Rbac\Role;
+namespace Dot\Rbac\Role\Provider;
+
+use Dot\Rbac\Role\HierarchicalRole;
+use Dot\Rbac\Role\Role;
 
 /**
  * Class InMemoryRoleProvider

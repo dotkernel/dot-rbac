@@ -15,7 +15,7 @@ use Dot\Rbac\Assertion\AssertionInterface;
 use Dot\Rbac\Assertion\AssertionPluginManager;
 use Dot\Rbac\Exception\InvalidArgumentException;
 use Dot\Rbac\RbacInterface;
-use Dot\Rbac\Role\RoleService;
+use Dot\Rbac\Role\RoleServiceInterface;
 
 /**
  * Class AuthorizationService
@@ -29,7 +29,7 @@ class AuthorizationService implements AuthorizationInterface
     protected $rbac;
 
     /**
-     * @var RoleService
+     * @var RoleServiceInterface
      */
     protected $roleService;
 
@@ -46,12 +46,12 @@ class AuthorizationService implements AuthorizationInterface
     /**
      * AuthorizationService constructor.
      * @param RbacInterface $rbac
-     * @param RoleService $roleService
+     * @param RoleServiceInterface $roleService
      * @param AssertionPluginManager $assertionPluginManager
      */
     public function __construct(
         RbacInterface $rbac,
-        RoleService $roleService,
+        RoleServiceInterface $roleService,
         AssertionPluginManager $assertionPluginManager)
     {
         $this->rbac = $rbac;

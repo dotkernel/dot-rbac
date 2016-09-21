@@ -7,7 +7,7 @@
  * Time: 1:55 PM
  */
 
-namespace Dot\Rbac\Role;
+namespace Dot\Rbac\Role\Provider;
 
 use Dot\Authorization\Role\RoleInterface;
 

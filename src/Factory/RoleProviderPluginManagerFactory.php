@@ -9,7 +9,7 @@
 
 namespace Dot\Rbac\Factory;
 
-use Dot\Rbac\Role\RoleProviderPluginManager;
+use Dot\Rbac\Role\Provider\RoleProviderPluginManager;
 use Interop\Container\ContainerInterface;
 
 /**

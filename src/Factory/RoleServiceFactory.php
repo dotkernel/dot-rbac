@@ -12,7 +12,7 @@ namespace Dot\Rbac\Factory;
 use Dot\Rbac\Exception\RuntimeException;
 use Dot\Rbac\Identity\IdentityProviderInterface;
 use Dot\Rbac\Options\AuthorizationOptions;
-use Dot\Rbac\Role\RoleProviderPluginManager;
+use Dot\Rbac\Role\Provider\RoleProviderPluginManager;
 use Dot\Rbac\Role\RoleService;
 use Interop\Container\ContainerInterface;
 
@@ -29,7 +29,6 @@ class RoleServiceFactory
     public function __invoke(ContainerInterface $container)
     {
         $authorizationOptions = $container->get(AuthorizationOptions::class);
-
         $identityProvider = $container->get(IdentityProviderInterface::class);
         
         $roleProviderConfig = $authorizationOptions->getRoleProvider();
@@ -38,7 +37,6 @@ class RoleServiceFactory
         }
 
         $pluginManager = $container->get(RoleProviderPluginManager::class);
-
         $roleProvider = $pluginManager->get(key($roleProviderConfig), current($roleProviderConfig));
 
         $service = new RoleService($identityProvider, $roleProvider);

@@ -13,12 +13,13 @@ use Dot\Authorization\Identity\IdentityInterface;
 use Dot\Authorization\Role\RoleInterface;
 use Dot\Rbac\Exception\RuntimeException;
 use Dot\Rbac\Identity\IdentityProviderInterface;
+use Dot\Rbac\Role\Provider\RoleProviderInterface;
 
 /**
  * Class RoleService
  * @package Dot\Rbac\Role
  */
-class RoleService
+class RoleService implements RoleServiceInterface
 {
     /**
      * @var IdentityProviderInterface
@@ -148,7 +149,7 @@ class RoleService
      *
      * @return string|string[]|RoleInterface|RoleInterface[]|\Traversable
      */
-    public function convertRoles($roles)
+    protected function convertRoles($roles)
     {
         if ($roles instanceof \Traversable) {
             $roles = iterator_to_array($roles);

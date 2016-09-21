@@ -13,7 +13,7 @@ use Dot\Rbac\Assertion\AssertionPluginManager;
 use Dot\Rbac\Authorization\AuthorizationService;
 use Dot\Rbac\Options\AuthorizationOptions;
 use Dot\Rbac\RbacInterface;
-use Dot\Rbac\Role\RoleService;
+use Dot\Rbac\Role\RoleServiceInterface;
 use Interop\Container\ContainerInterface;
 
 class AuthorizationServiceFactory
@@ -21,15 +21,12 @@ class AuthorizationServiceFactory
     public function __invoke(ContainerInterface $container)
     {
         $rbac = $container->get(RbacInterface::class);
-
-        $roleService = $container->get(RoleService::class);
-
+        $roleService = $container->get(RoleServiceInterface::class);
         $assertionManager = $container->get(AssertionPluginManager::class);
 
         $service = new AuthorizationService($rbac, $roleService, $assertionManager);
 
         $moduleOptions = $container->get(AuthorizationOptions::class);
-
         $service->setAssertions($moduleOptions->getAssertionMap());
 
         return $service;
