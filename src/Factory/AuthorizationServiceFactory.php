@@ -16,8 +16,16 @@ use Dot\Rbac\RbacInterface;
 use Dot\Rbac\Role\RoleServiceInterface;
 use Interop\Container\ContainerInterface;
 
+/**
+ * Class AuthorizationServiceFactory
+ * @package Dot\Rbac\Factory
+ */
 class AuthorizationServiceFactory
 {
+    /**
+     * @param ContainerInterface $container
+     * @return AuthorizationService
+     */
     public function __invoke(ContainerInterface $container)
     {
         $rbac = $container->get(RbacInterface::class);

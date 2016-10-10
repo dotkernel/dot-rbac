@@ -41,7 +41,7 @@ class AuthenticationIdentityProvider implements IdentityProviderInterface
     {
         $identity = $this->authentication->getIdentity();
 
-        if(!is_null($identity) && !$identity instanceof IdentityInterface) {
+        if (!is_null($identity) && !$identity instanceof IdentityInterface) {
             throw new RuntimeException(sprintf(
                 'Authenticated identity must be an instance of %s, "%s" given',
                 IdentityInterface::class,

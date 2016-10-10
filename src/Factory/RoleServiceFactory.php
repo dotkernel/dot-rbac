@@ -30,9 +30,9 @@ class RoleServiceFactory
     {
         $authorizationOptions = $container->get(AuthorizationOptions::class);
         $identityProvider = $container->get(IdentityProviderInterface::class);
-        
+
         $roleProviderConfig = $authorizationOptions->getRoleProvider();
-        if(empty($roleProviderConfig)) {
+        if (empty($roleProviderConfig)) {
             throw new RuntimeException('No role provider was set for authorization');
         }
 

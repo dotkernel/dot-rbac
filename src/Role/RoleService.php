@@ -44,8 +44,7 @@ class RoleService implements RoleServiceInterface
     public function __construct(
         IdentityProviderInterface $identityProvider,
         RoleProviderInterface $roleProvider
-    )
-    {
+    ) {
         $this->identityProvider = $identityProvider;
         $this->roleProvider = $roleProvider;
     }
@@ -97,13 +96,13 @@ class RoleService implements RoleServiceInterface
      */
     public function getIdentityRoles()
     {
-        if(!$identity = $this->getIdentity()) {
+        if (!$identity = $this->getIdentity()) {
             return $this->convertRoles([$this->guestRole]);
         }
 
-        if(!$identity instanceof
-            IdentityInterface)
-        {
+        if (!$identity instanceof
+            IdentityInterface
+        ) {
             throw new RuntimeException(sprintf(
                 'Identity must implement %s, "%s" given',
                 IdentityInterface::class,
@@ -131,12 +130,11 @@ class RoleService implements RoleServiceInterface
         }
         $roleNames = [];
         foreach ($roles as $role) {
-            $roleNames[] = $role instanceof RoleInterface ? $role->getName() : (string) $role;
+            $roleNames[] = $role instanceof RoleInterface ? $role->getName() : (string)$role;
         }
 
         $identityRoleNames = [];
-        foreach ($this->flattenRoles($identityRoles) as $role)
-        {
+        foreach ($this->flattenRoles($identityRoles) as $role) {
             $identityRoleNames[] = $role->getName();
         }
 
@@ -155,15 +153,15 @@ class RoleService implements RoleServiceInterface
             $roles = iterator_to_array($roles);
         }
         $collectedRoles = [];
-        $toCollect      = [];
-        foreach ((array) $roles as $role) {
+        $toCollect = [];
+        foreach ((array)$roles as $role) {
             // If it's already a RoleInterface, nothing to do as a RoleInterface contains everything already
             if ($role instanceof RoleInterface) {
                 $collectedRoles[] = $role;
                 continue;
             }
             // Otherwise, it's a string and hence we need to collect it
-            $toCollect[] = (string) $role;
+            $toCollect[] = (string)$role;
         }
         // Nothing to collect, we don't even need to hit the (potentially) costly role provider
         if (empty($toCollect)) {
@@ -183,11 +181,10 @@ class RoleService implements RoleServiceInterface
      */
     protected function flattenRoles(array $roles)
     {
-        foreach ($roles as $role)
-        {
+        foreach ($roles as $role) {
             yield $role;
 
-            if(!$role instanceof  HierarchicalRoleInterface) {
+            if (!$role instanceof HierarchicalRoleInterface) {
                 continue;
             }
 

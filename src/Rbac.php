@@ -27,20 +27,19 @@ class Rbac implements RbacInterface
      */
     public function isGranted($roles, $permission)
     {
-        if(!is_string($permission)) {
+        if (!is_string($permission)) {
             throw new RuntimeException(sprintf(
                 'Permission must be a string, "%s" given',
                 is_object($permission) ? get_class($permission) : gettype($permission)
             ));
         }
 
-        if($roles instanceof RoleInterface) {
+        if ($roles instanceof RoleInterface) {
             $roles = [$roles];
         }
 
-        foreach ($this->flattenRoles($roles) as $role)
-        {
-            if($role->hasPermission($permission)) {
+        foreach ($this->flattenRoles($roles) as $role) {
+            if ($role->hasPermission($permission)) {
                 return true;
             }
         }
@@ -54,11 +53,10 @@ class Rbac implements RbacInterface
      */
     protected function flattenRoles($roles)
     {
-        foreach ($roles as $role)
-        {
+        foreach ($roles as $role) {
             yield $role;
 
-            if(!$role instanceof  HierarchicalRoleInterface) {
+            if (!$role instanceof HierarchicalRoleInterface) {
                 continue;
             }
 

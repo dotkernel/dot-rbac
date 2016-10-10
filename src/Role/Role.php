@@ -17,10 +17,10 @@ use Dot\Authorization\Role\RoleInterface;
  */
 class Role implements RoleInterface
 {
-    /** @var string  */
+    /** @var string */
     protected $name;
 
-    /** @var array  */
+    /** @var array */
     protected $permissions = [];
 
     /**
@@ -29,7 +29,7 @@ class Role implements RoleInterface
      */
     public function __construct($name)
     {
-        $this->name = (string) $name;
+        $this->name = (string)$name;
     }
 
     /**
@@ -39,7 +39,7 @@ class Role implements RoleInterface
     {
         return $this->name;
     }
-    
+
     /**
      * @return string[]
      */
@@ -53,7 +53,7 @@ class Role implements RoleInterface
      */
     public function addPermission($permission)
     {
-        $this->permissions[(string) $permission] = $permission;
+        $this->permissions[(string)$permission] = $permission;
     }
 
     /**
@@ -62,6 +62,6 @@ class Role implements RoleInterface
      */
     public function hasPermission($permission)
     {
-        return isset($this->permissions[(string) $permission]);
+        return isset($this->permissions[(string)$permission]);
     }
 }

@@ -52,8 +52,8 @@ class AuthorizationService implements AuthorizationInterface
     public function __construct(
         RbacInterface $rbac,
         RoleServiceInterface $roleService,
-        AssertionPluginManager $assertionPluginManager)
-    {
+        AssertionPluginManager $assertionPluginManager
+    ) {
         $this->rbac = $rbac;
         $this->roleService = $roleService;
         $this->assertionPluginManager = $assertionPluginManager;
@@ -65,7 +65,7 @@ class AuthorizationService implements AuthorizationInterface
      */
     public function addAssertion($permission, $assertion)
     {
-        $this->assertions[(string) $permission] = $assertion;
+        $this->assertions[(string)$permission] = $assertion;
     }
 
     /**
@@ -82,7 +82,7 @@ class AuthorizationService implements AuthorizationInterface
      */
     public function hasAssertion($permission)
     {
-        return isset($this->assertions[(string) $permission]);
+        return isset($this->assertions[(string)$permission]);
     }
 
     /**
@@ -103,22 +103,20 @@ class AuthorizationService implements AuthorizationInterface
      */
     public function isGranted($permission, array $roles = [], $context = null)
     {
-        if(empty($roles)) {
+        if (empty($roles)) {
             $roles = $this->roleService->getIdentityRoles();
         }
 
-        if(empty($roles))
-        {
+        if (empty($roles)) {
             return false;
         }
 
-        if(!$this->rbac->isGranted($roles, $permission))
-        {
+        if (!$this->rbac->isGranted($roles, $permission)) {
             return false;
         }
 
-        if($this->hasAssertion($permission)) {
-            return $this->assert($this->assertions[(string) $permission], $context);
+        if ($this->hasAssertion($permission)) {
+            return $this->assert($this->assertions[(string)$permission], $context);
         }
 
         return true;
@@ -131,16 +129,11 @@ class AuthorizationService implements AuthorizationInterface
      */
     protected function assert($assertion, $context = null)
     {
-        if (is_callable($assertion))
-        {
+        if (is_callable($assertion)) {
             return $assertion($this, $context);
-        }
-        elseif ($assertion instanceof AssertionInterface)
-        {
+        } elseif ($assertion instanceof AssertionInterface) {
             return $assertion->assert($this, $context);
-        }
-        elseif(is_string($assertion))
-        {
+        } elseif (is_string($assertion)) {
             $assertion = $this->assertionPluginManager->get($assertion);
             return $assertion->assert($this, $context);
         }

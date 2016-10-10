@@ -18,10 +18,10 @@ use Dot\Rbac\Role\Role;
  */
 class InMemoryRoleProvider implements RoleProviderInterface
 {
-    /** @var array  */
+    /** @var array */
     protected $roles = [];
 
-    /** @var array  */
+    /** @var array */
     protected $rolesConfig = [];
 
     /**
@@ -41,8 +41,7 @@ class InMemoryRoleProvider implements RoleProviderInterface
     {
         $roles = [];
 
-        foreach ($roleNames as $roleName)
-        {
+        foreach ($roleNames as $roleName) {
             $roles[] = $this->getRole($roleName);
         }
 
@@ -55,13 +54,12 @@ class InMemoryRoleProvider implements RoleProviderInterface
      */
     public function getRole($roleName)
     {
-        if(isset($this->roles[$roleName])) {
+        if (isset($this->roles[$roleName])) {
             return $this->roles[$roleName];
         }
 
         //if no config, create a simple role with no permission
-        if(!isset($this->rolesConfig[$roleName]))
-        {
+        if (!isset($this->rolesConfig[$roleName])) {
             $role = new Role($roleName);
             $this->roles[$roleName] = $role;
             return $role;

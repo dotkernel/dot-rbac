@@ -30,7 +30,7 @@ class AuthenticationIdentityProviderFactory
             ? $container->get(AuthenticationInterface::class)
             : null;
 
-        if(!$authentication) {
+        if (!$authentication) {
             throw new \Exception("AuthenticationInterface service is missing");
         }
 

@@ -15,5 +15,5 @@ namespace Dot\Rbac\Exception;
  */
 interface ExceptionInterface
 {
-    
+
 }
