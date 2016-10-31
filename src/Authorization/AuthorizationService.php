@@ -9,7 +9,6 @@
 
 namespace Dot\Rbac\Authorization;
 
-use Dot\Authentication\Identity\IdentityInterface;
 use Dot\Authorization\AuthorizationInterface;
 use Dot\Rbac\Assertion\AssertionInterface;
 use Dot\Rbac\Assertion\AssertionPluginManager;
@@ -86,7 +85,7 @@ class AuthorizationService implements AuthorizationInterface
     }
 
     /**
-     * @return IdentityInterface|null
+     * @return \Dot\Authorization\Identity\IdentityInterface
      */
     public function getIdentity()
     {
