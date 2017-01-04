@@ -1,6 +1,6 @@
 # dot-rbac
-Rbac authorization model implementing [dot-authorization](https://github.com/dotkernel/dot-authorization)'s `AuthorizationInterface`. An authorization service is responsible for deciding if the authenticated identity or quest has access to certain parts of the application.
-The RBAC model defines roles that can pe assigned to users. The authorization is done on a role basis, no user basis in in ACL.
+Rbac authorization model implementing [dot-authorization](https://github.com/dotkernel/dot-authorization)'s `AuthorizationInterface`. An authorization service is responsible for deciding if the authenticated identity or guest has access to certain parts of the application.
+The RBAC model defines roles that can be assigned to users. The authorization is done on a role basis, not user basis as in ACL.
 Each role can have one or multiple permissions/privileges assigned. When deciding if a user is authorized, the requested permission is checked in all user roles and if at least one role has that permission, access is granted.
 
 ## Installation
@@ -17,7 +17,7 @@ Even if the authorization service can be programmatically configured, we recomme
 We further describe how to configure the module, using configuration file.
 
 First of all, you should enable the module in your application by merging this package's `ConfigProvider` with your application's config.
-This ensures that all dependencies required by this modules are registered in the service manager. It also defines some sane default for this module.
+This ensures that all dependencies required by this module are registered in the service manager. It also defines some sane defaults config values for this module.
 
 Create a configuration file in your `config/autoload` folder and change module options as desired
 
@@ -144,7 +144,7 @@ Assertions can have a last word in deciding if someone is authorized for the req
 A good assertion example could be an edit permission, but with the restriction that it should be able to edit the item just if the user id is matching with the item's owner id.
 It is up to you to write the logic inside an assertion.
 
-An assertion have to implement the `AssertionInterface` and be registered in the AssertionPluginManager.
+An assertion has to implement the `AssertionInterface` and be registered in the AssertionPluginManager.
 
 This interface defines the following method
 
