@@ -9,7 +9,6 @@
 
 namespace Dot\Rbac\Exception;
 
-
 /**
  * Class InvalidArgumentException
  * @package Dot\Rbac\Exception

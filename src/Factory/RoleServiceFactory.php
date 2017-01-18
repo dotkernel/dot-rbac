@@ -43,6 +43,5 @@ class RoleServiceFactory
         $service->setGuestRole($authorizationOptions->getGuestRole());
 
         return $service;
-
     }
 }
