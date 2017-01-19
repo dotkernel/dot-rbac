@@ -10,13 +10,9 @@
     }
   ],
   "require": {
-
     "php": "^5.6 || ^7.0",
-    "psr/http-message": "^1.0",
     "container-interop/container-interop": "^1.1",
-
     "zendframework/zend-servicemanager": "^3.1",
-    "zendframework/zend-stdlib": "^3.1",
 
     "dotkernel/dot-authorization": "0.6.x-dev"
   },
@@ -24,7 +20,11 @@
     "phpunit/phpunit": "^4.8",
     "squizlabs/php_codesniffer": "^2.3",
 
+    "zendframework/zend-stdlib": "^3.1",
     "dotkernel/dot-authentication": "0.6.x-dev"
+  },
+  "suggest": {
+    "dotkernel/dot-authentication": "Needed if you want to use the AuthenticationIdentityProvider"
   },
   "autoload": {
     "psr-4": {

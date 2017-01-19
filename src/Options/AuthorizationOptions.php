@@ -89,6 +89,4 @@ class AuthorizationOptions extends AbstractOptions
     {
         $this->roleProvider = $roleProvider;
     }
-
-
 }

@@ -9,7 +9,6 @@
 
 namespace Dot\Rbac\Role;
 
-
 use Dot\Authorization\Identity\IdentityInterface;
 use Dot\Authorization\Role\RoleInterface;
 

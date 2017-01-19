@@ -76,15 +76,6 @@ class AuthorizationService implements AuthorizationInterface
     }
 
     /**
-     * @param $permission
-     * @return bool
-     */
-    public function hasAssertion($permission)
-    {
-        return isset($this->assertions[(string)$permission]);
-    }
-
-    /**
      * @return \Dot\Authorization\Identity\IdentityInterface
      */
     public function getIdentity()
@@ -119,6 +110,15 @@ class AuthorizationService implements AuthorizationInterface
         }
 
         return true;
+    }
+
+    /**
+     * @param $permission
+     * @return bool
+     */
+    public function hasAssertion($permission)
+    {
+        return isset($this->assertions[(string)$permission]);
     }
 
     /**

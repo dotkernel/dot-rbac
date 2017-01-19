@@ -66,22 +66,6 @@ class RoleService implements RoleServiceInterface
     }
 
     /**
-     * @return IdentityInterface|null
-     */
-    public function getIdentity()
-    {
-        return $this->identityProvider->getIdentity();
-    }
-
-    /**
-     * @param string $guestRole
-     */
-    public function setGuestRole($guestRole)
-    {
-        $this->guestRole = $guestRole;
-    }
-
-    /**
      * @return string
      */
     public function getGuestRole()
@@ -90,27 +74,11 @@ class RoleService implements RoleServiceInterface
     }
 
     /**
-     * Get the identity roles from the current identity
-     *
-     * @return RoleInterface[]
+     * @param string $guestRole
      */
-    public function getIdentityRoles()
+    public function setGuestRole($guestRole)
     {
-        if (!$identity = $this->getIdentity()) {
-            return $this->convertRoles([$this->guestRole]);
-        }
-
-        if (!$identity instanceof
-            IdentityInterface
-        ) {
-            throw new RuntimeException(sprintf(
-                'Identity must implement %s, "%s" given',
-                IdentityInterface::class,
-                is_object($identity) ? get_class($identity) : gettype($identity)
-            ));
-        }
-
-        return $this->convertRoles($identity->getRoles());
+        $this->guestRole = $guestRole;
     }
 
     /**
@@ -141,6 +109,37 @@ class RoleService implements RoleServiceInterface
         return count(array_intersect($roleNames, $identityRoleNames)) > 0;
     }
 
+    /**
+     * Get the identity roles from the current identity
+     *
+     * @return RoleInterface[]
+     */
+    public function getIdentityRoles()
+    {
+        if (!$identity = $this->getIdentity()) {
+            return $this->convertRoles([$this->guestRole]);
+        }
+
+        if (!$identity instanceof
+            IdentityInterface
+        ) {
+            throw new RuntimeException(sprintf(
+                'Identity must implement %s, "%s" given',
+                IdentityInterface::class,
+                is_object($identity) ? get_class($identity) : gettype($identity)
+            ));
+        }
+
+        return $this->convertRoles($identity->getRoles());
+    }
+
+    /**
+     * @return IdentityInterface|null
+     */
+    public function getIdentity()
+    {
+        return $this->identityProvider->getIdentity();
+    }
 
     /**
      * @param $roles
@@ -177,7 +176,7 @@ class RoleService implements RoleServiceInterface
      * role, it also extracts all the children
      *
      * @param  array|RoleInterface[] $roles
-     * @return RoleInterface[]
+     * @return \Generator
      */
     protected function flattenRoles(array $roles)
     {
@@ -195,5 +194,4 @@ class RoleService implements RoleServiceInterface
             }
         }
     }
-
 }

@@ -82,6 +82,5 @@ class InMemoryRoleProvider implements RoleProviderInterface
         }
         $this->roles[$roleName] = $role;
         return $role;
-
     }
 }
