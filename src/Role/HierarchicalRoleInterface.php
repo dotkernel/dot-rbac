@@ -7,6 +7,8 @@
  * Time: 1:55 PM
  */
 
+declare(strict_types = 1);
+
 namespace Dot\Rbac\Role;
 
 use Dot\Authorization\Role\RoleInterface;
@@ -22,12 +24,12 @@ interface HierarchicalRoleInterface extends RoleInterface
      *
      * @return bool
      */
-    public function hasChildren();
+    public function hasChildren(): bool;
 
     /**
      * Get child roles
      *
      * @return RoleInterface[]|\Traversable
      */
-    public function getChildren();
+    public function getChildren(): array;
 }

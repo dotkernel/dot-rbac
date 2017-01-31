@@ -7,10 +7,12 @@
  * Time: 1:55 PM
  */
 
+declare(strict_types = 1);
+
 namespace Dot\Rbac\Identity;
 
 use Dot\Authentication\AuthenticationInterface;
-use Dot\Authentication\Identity\IdentityInterface;
+use Dot\Authorization\Identity\IdentityInterface;
 use Dot\Rbac\Exception\RuntimeException;
 
 /**
@@ -37,7 +39,7 @@ class AuthenticationIdentityProvider implements IdentityProviderInterface
      * @return IdentityInterface
      * @throws \Exception
      */
-    public function getIdentity()
+    public function getIdentity(): ?IdentityInterface
     {
         $identity = $this->authentication->getIdentity();
 

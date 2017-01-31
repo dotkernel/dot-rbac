@@ -7,6 +7,8 @@
  * Time: 1:55 PM
  */
 
+declare(strict_types = 1);
+
 namespace Dot\Rbac\Role\Provider;
 
 use Zend\ServiceManager\AbstractPluginManager;
@@ -22,5 +24,14 @@ class RoleProviderPluginManager extends AbstractPluginManager
 
     protected $factories = [
         InMemoryRoleProvider::class => InvokableFactory::class,
+    ];
+
+    protected $aliases = [
+        'inmemoryroleprovider' => InMemoryRoleProvider::class,
+        'inMemoryRoleProvider' => InMemoryRoleProvider::class,
+        'InMemoryRoleProvider' => InMemoryRoleProvider::class,
+        'inmemory' => InMemoryRoleProvider::class,
+        'inMemory' => InMemoryRoleProvider::class,
+        'InMemory' => InMemoryRoleProvider::class,
     ];
 }

@@ -7,6 +7,8 @@
  * Time: 1:55 PM
  */
 
+declare(strict_types = 1);
+
 namespace Dot\Rbac\Exception;
 
 /**

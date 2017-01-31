@@ -7,11 +7,14 @@
  * Time: 1:55 PM
  */
 
+declare(strict_types = 1);
+
 namespace Dot\Rbac\Factory;
 
 use Dot\Rbac\Exception\RuntimeException;
 use Dot\Rbac\Identity\IdentityProviderInterface;
 use Dot\Rbac\Options\AuthorizationOptions;
+use Dot\Rbac\Role\Provider\Factory;
 use Dot\Rbac\Role\Provider\RoleProviderPluginManager;
 use Dot\Rbac\Role\RoleService;
 use Interop\Container\ContainerInterface;
@@ -24,9 +27,10 @@ class RoleServiceFactory
 {
     /**
      * @param ContainerInterface $container
+     * @param $requestedName
      * @return RoleService
      */
-    public function __invoke(ContainerInterface $container)
+    public function __invoke(ContainerInterface $container, $requestedName)
     {
         $authorizationOptions = $container->get(AuthorizationOptions::class);
         $identityProvider = $container->get(IdentityProviderInterface::class);
@@ -36,10 +40,11 @@ class RoleServiceFactory
             throw new RuntimeException('No role provider was set for authorization');
         }
 
-        $pluginManager = $container->get(RoleProviderPluginManager::class);
-        $roleProvider = $pluginManager->get(key($roleProviderConfig), current($roleProviderConfig));
+        $factory = new Factory($container, $container->get(RoleProviderPluginManager::class));
+        $roleProvider = $factory->create($roleProviderConfig);
 
-        $service = new RoleService($identityProvider, $roleProvider);
+        /** @var RoleService $service */
+        $service = new $requestedName($identityProvider, $roleProvider);
         $service->setGuestRole($authorizationOptions->getGuestRole());
 
         return $service;

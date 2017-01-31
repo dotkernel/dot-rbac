@@ -7,6 +7,8 @@
  * Time: 1:55 PM
  */
 
+declare(strict_types = 1);
+
 namespace Dot\Rbac\Options;
 
 use Zend\Stdlib\AbstractOptions;
@@ -25,7 +27,7 @@ class AuthorizationOptions extends AbstractOptions
     /**
      * @var array
      */
-    protected $assertionMap = [];
+    protected $assertions = [];
 
     /**
      * @var array
@@ -45,7 +47,7 @@ class AuthorizationOptions extends AbstractOptions
     /**
      * @return string
      */
-    public function getGuestRole()
+    public function getGuestRole(): string
     {
         return $this->guestRole;
     }
@@ -53,7 +55,7 @@ class AuthorizationOptions extends AbstractOptions
     /**
      * @param string $guestRole
      */
-    public function setGuestRole($guestRole)
+    public function setGuestRole(string $guestRole)
     {
         $this->guestRole = $guestRole;
     }
@@ -61,23 +63,23 @@ class AuthorizationOptions extends AbstractOptions
     /**
      * @return array
      */
-    public function getAssertionMap()
+    public function getAssertions(): array
     {
-        return $this->assertionMap;
+        return $this->assertions;
     }
 
     /**
-     * @param array $assertionMap
+     * @param array $assertions
      */
-    public function setAssertionMap($assertionMap)
+    public function setAssertions(array $assertions)
     {
-        $this->assertionMap = $assertionMap;
+        $this->assertions = $assertions;
     }
 
     /**
      * @return array
      */
-    public function getRoleProvider()
+    public function getRoleProvider(): array
     {
         return $this->roleProvider;
     }
@@ -85,7 +87,7 @@ class AuthorizationOptions extends AbstractOptions
     /**
      * @param array $roleProvider
      */
-    public function setRoleProvider($roleProvider)
+    public function setRoleProvider(array $roleProvider)
     {
         $this->roleProvider = $roleProvider;
     }

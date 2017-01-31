@@ -7,6 +7,8 @@
  * Time: 1:55 PM
  */
 
+declare(strict_types = 1);
+
 namespace Dot\Rbac\Factory;
 
 use Dot\Rbac\Assertion\AssertionPluginManager;
@@ -25,8 +27,6 @@ class AssertionPluginManagerFactory
     public function __invoke(ContainerInterface $container)
     {
         $config = $container->get('config')['dot_authorization']['assertion_manager'];
-        $pluginManager = new AssertionPluginManager($container, $config);
-
-        return $pluginManager;
+        return new AssertionPluginManager($container, $config);
     }
 }

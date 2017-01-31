@@ -7,12 +7,15 @@
  * Time: 1:55 PM
  */
 
+declare(strict_types = 1);
+
 namespace Dot\Rbac\Authorization;
 
 use Dot\Authorization\AuthorizationInterface;
+use Dot\Authorization\Identity\IdentityInterface;
 use Dot\Rbac\Assertion\AssertionInterface;
-use Dot\Rbac\Assertion\AssertionPluginManager;
-use Dot\Rbac\Exception\InvalidArgumentException;
+use Dot\Rbac\Assertion\Factory;
+use Dot\Rbac\Exception\RuntimeException;
 use Dot\Rbac\RbacInterface;
 use Dot\Rbac\Role\RoleServiceInterface;
 
@@ -33,12 +36,12 @@ class AuthorizationService implements AuthorizationInterface
     protected $roleService;
 
     /**
-     * @var AssertionPluginManager
+     * @var Factory
      */
-    protected $assertionPluginManager;
+    protected $assertionFactory;
 
     /**
-     * @var AssertionInterface[]
+     * @var array
      */
     protected $assertions = [];
 
@@ -46,39 +49,41 @@ class AuthorizationService implements AuthorizationInterface
      * AuthorizationService constructor.
      * @param RbacInterface $rbac
      * @param RoleServiceInterface $roleService
-     * @param AssertionPluginManager $assertionPluginManager
+     * @param Factory $assertionFactory
      */
     public function __construct(
         RbacInterface $rbac,
         RoleServiceInterface $roleService,
-        AssertionPluginManager $assertionPluginManager
+        Factory $assertionFactory
     ) {
         $this->rbac = $rbac;
         $this->roleService = $roleService;
-        $this->assertionPluginManager = $assertionPluginManager;
+        $this->assertionFactory = $assertionFactory;
     }
 
     /**
-     * @param $permission
-     * @param $assertion
+     * @param string $permission
+     * @param mixed $assertion
      */
-    public function addAssertion($permission, $assertion)
+    public function addAssertion(string $permission, mixed $assertion)
     {
-        $this->assertions[(string)$permission] = $assertion;
+        if (!is_array($assertion) && !$assertion instanceof AssertionInterface) {
+            throw new RuntimeException(
+                sprintf('Assertion must be an array or an instance of `%s`', AssertionInterface::class)
+            );
+        }
+
+        if (!isset($this->assertions[$permission])) {
+            $this->assertions[$permission] = [];
+        }
+
+        $this->assertions[$permission][] = $assertion;
     }
 
     /**
-     * @param array $assertions
+     * @return IdentityInterface
      */
-    public function setAssertions(array $assertions)
-    {
-        $this->assertions = $assertions;
-    }
-
-    /**
-     * @return \Dot\Authorization\Identity\IdentityInterface
-     */
-    public function getIdentity()
+    public function getIdentity(): ?IdentityInterface
     {
         return $this->roleService->getIdentity();
     }
@@ -88,10 +93,10 @@ class AuthorizationService implements AuthorizationInterface
      *
      * @param string $permission
      * @param array $roles
-     * @param null $context
+     * @param mixed $context
      * @return bool
      */
-    public function isGranted($permission, array $roles = [], $context = null)
+    public function isGranted(string $permission, array $roles = [], mixed $context = null): bool
     {
         if (empty($roles)) {
             $roles = $this->roleService->getIdentityRoles();
@@ -101,46 +106,43 @@ class AuthorizationService implements AuthorizationInterface
             return false;
         }
 
-        if (!$this->rbac->isGranted($roles, $permission)) {
+        if (!$this->rbac->isGranted($permission, $roles)) {
             return false;
         }
 
         if ($this->hasAssertion($permission)) {
-            return $this->assert($this->assertions[(string)$permission], $context);
+            return $this->assert($this->assertions[$permission], $context);
         }
 
         return true;
     }
 
     /**
-     * @param $permission
+     * @param string $permission
      * @return bool
      */
-    public function hasAssertion($permission)
+    public function hasAssertion(string $permission): bool
     {
-        return isset($this->assertions[(string)$permission]);
+        return isset($this->assertions[$permission]) && !empty($this->assertions[$permission]);
     }
 
     /**
-     * @param $assertion
-     * @param null $context
+     * @param array $assertions
+     * @param mixed $context
      * @return bool
      */
-    protected function assert($assertion, $context = null)
+    protected function assert(array $assertions, mixed $context = null): bool
     {
-        if (is_callable($assertion)) {
-            return $assertion($this, $context);
-        } elseif ($assertion instanceof AssertionInterface) {
-            return $assertion->assert($this, $context);
-        } elseif (is_string($assertion)) {
-            $assertion = $this->assertionPluginManager->get($assertion);
-            return $assertion->assert($this, $context);
-        }
+        $allow = true;
+        foreach ($assertions as $assertion) {
+            if (is_array($assertion) && !empty($assertion)) {
+                $assertion = $this->assertionFactory->create($assertion);
+            }
 
-        throw new InvalidArgumentException(sprintf(
-            'Assertion must be a callable or implement %s, "%s" given',
-            AssertionInterface::class,
-            is_object($assertion) ? get_class($assertion) : gettype($assertion)
-        ));
+            if (($allow = $assertion->assert($this, $context)) === false) {
+                break;
+            }
+        }
+        return $allow;
     }
 }

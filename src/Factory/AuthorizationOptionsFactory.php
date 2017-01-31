@@ -7,6 +7,8 @@
  * Time: 1:55 PM
  */
 
+declare(strict_types = 1);
+
 namespace Dot\Rbac\Factory;
 
 use Dot\Rbac\Options\AuthorizationOptions;
@@ -20,10 +22,11 @@ class AuthorizationOptionsFactory
 {
     /**
      * @param ContainerInterface $container
+     * @param string $requestedName
      * @return AuthorizationOptions
      */
-    public function __invoke(ContainerInterface $container)
+    public function __invoke(ContainerInterface $container, $requestedName)
     {
-        return new AuthorizationOptions($container->get('config')['dot_authorization']);
+        return new $requestedName($container->get('config')['dot_authorization']);
     }
 }
