@@ -24,5 +24,5 @@ interface AssertionInterface
      * @param mixed|null $context
      * @return bool
      */
-    public function assert(AuthorizationInterface $authorization, mixed $context = null): bool;
+    public function assert(AuthorizationInterface $authorization, $context = null): bool;
 }

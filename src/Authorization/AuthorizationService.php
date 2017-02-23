@@ -65,7 +65,7 @@ class AuthorizationService implements AuthorizationInterface
      * @param string $permission
      * @param mixed $assertion
      */
-    public function addAssertion(string $permission, mixed $assertion)
+    public function addAssertion(string $permission, $assertion)
     {
         if (!is_array($assertion) && !$assertion instanceof AssertionInterface) {
             throw new RuntimeException(
@@ -96,7 +96,7 @@ class AuthorizationService implements AuthorizationInterface
      * @param mixed $context
      * @return bool
      */
-    public function isGranted(string $permission, array $roles = [], mixed $context = null): bool
+    public function isGranted(string $permission, array $roles = [], $context = null): bool
     {
         if (empty($roles)) {
             $roles = $this->roleService->getIdentityRoles();
@@ -131,7 +131,7 @@ class AuthorizationService implements AuthorizationInterface
      * @param mixed $context
      * @return bool
      */
-    protected function assert(array $assertions, mixed $context = null): bool
+    protected function assert(array $assertions, $context = null): bool
     {
         $allow = true;
         foreach ($assertions as $assertion) {
