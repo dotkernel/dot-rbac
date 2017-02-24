@@ -31,8 +31,9 @@ class InMemoryRoleProvider implements RoleProviderInterface
      * InMemoryRoleProvider constructor.
      * @param array $options
      */
-    public function __construct(array $options = [])
+    public function __construct(array $options = null)
     {
+        $options = $options ?? [];
         if (isset($options['roles']) && is_array($options['roles'])) {
             $this->rolesConfig = $options['roles'];
         }

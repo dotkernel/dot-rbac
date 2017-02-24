@@ -49,7 +49,7 @@ class Factory
         }
 
         $assertionManager = $this->getAssertionPluginManager();
-        return $assertionManager->get($type, $specs['options'] ?? []);
+        return $assertionManager->get($type, $specs['options'] ?? null);
     }
 
     /**

@@ -51,7 +51,7 @@ class Factory
         }
 
         $roleProviderManager = $this->getRoleProviderPluginManager();
-        return $roleProviderManager->get($type, $specs['options'] ?? []);
+        return $roleProviderManager->get($type, $specs['options'] ?? null);
     }
 
     /**
