@@ -7,9 +7,12 @@
  * Time: 1:55 PM
  */
 
+declare(strict_types = 1);
+
 namespace Dot\Rbac\Factory;
 
 use Dot\Rbac\Assertion\AssertionPluginManager;
+use Dot\Rbac\Assertion\Factory;
 use Dot\Rbac\Authorization\AuthorizationService;
 use Dot\Rbac\Options\AuthorizationOptions;
 use Dot\Rbac\RbacInterface;
@@ -24,18 +27,28 @@ class AuthorizationServiceFactory
 {
     /**
      * @param ContainerInterface $container
+     * @param $requestedName
      * @return AuthorizationService
      */
-    public function __invoke(ContainerInterface $container)
+    public function __invoke(ContainerInterface $container, $requestedName)
     {
         $rbac = $container->get(RbacInterface::class);
         $roleService = $container->get(RoleServiceInterface::class);
-        $assertionManager = $container->get(AssertionPluginManager::class);
+        $assertionFactory = new Factory($container, $container->get(AssertionPluginManager::class));
 
-        $service = new AuthorizationService($rbac, $roleService, $assertionManager);
+        /** @var AuthorizationService $service */
+        $service = new $requestedName($rbac, $roleService, $assertionFactory);
 
+        /** @var AuthorizationOptions $moduleOptions */
         $moduleOptions = $container->get(AuthorizationOptions::class);
-        $service->setAssertions($moduleOptions->getAssertionMap());
+        $assertions = $moduleOptions->getAssertions();
+        foreach ($assertions as $assertion) {
+            if (is_array($assertion) && isset($assertion['permissions']) && is_array($assertion['permissions'])) {
+                foreach ($assertion['permissions'] as $permission) {
+                    $service->addAssertion($permission, $assertion);
+                }
+            }
+        }
 
         return $service;
     }

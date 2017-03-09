@@ -7,6 +7,8 @@
  * Time: 1:55 PM
  */
 
+declare(strict_types = 1);
+
 namespace Dot\Rbac\Factory;
 
 use Dot\Authentication\AuthenticationInterface;
@@ -21,19 +23,11 @@ class AuthenticationIdentityProviderFactory
 {
     /**
      * @param ContainerInterface $container
+     * @param $requestedName
      * @return AuthenticationIdentityProvider
-     * @throws \Exception
      */
-    public function __invoke(ContainerInterface $container)
+    public function __invoke(ContainerInterface $container, $requestedName)
     {
-        $authentication = $container->has(AuthenticationInterface::class)
-            ? $container->get(AuthenticationInterface::class)
-            : null;
-
-        if (!$authentication) {
-            throw new \Exception("AuthenticationInterface service is missing");
-        }
-
-        return new AuthenticationIdentityProvider($authentication);
+        return new $requestedName($container->get(AuthenticationInterface::class));
     }
 }

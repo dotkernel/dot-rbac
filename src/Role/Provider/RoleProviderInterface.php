@@ -7,6 +7,8 @@
  * Time: 1:55 PM
  */
 
+declare(strict_types = 1);
+
 namespace Dot\Rbac\Role\Provider;
 
 use Dot\Authorization\Role\RoleInterface;
@@ -25,5 +27,5 @@ interface RoleProviderInterface
      * @param string[] $roleNames
      * @return RoleInterface[]
      */
-    public function getRoles(array $roleNames);
+    public function getRoles(array $roleNames): array;
 }

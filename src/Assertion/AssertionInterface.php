@@ -7,6 +7,8 @@
  * Time: 1:55 PM
  */
 
+declare(strict_types = 1);
+
 namespace Dot\Rbac\Assertion;
 
 use Dot\Authorization\AuthorizationInterface;
@@ -22,5 +24,5 @@ interface AssertionInterface
      * @param mixed|null $context
      * @return bool
      */
-    public function assert(AuthorizationInterface $authorization, $context = null);
+    public function assert(AuthorizationInterface $authorization, $context = null): bool;
 }

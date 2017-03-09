@@ -7,6 +7,8 @@
  * Time: 1:55 PM
  */
 
+declare(strict_types = 1);
+
 namespace Dot\Rbac\Role;
 
 use Dot\Authorization\Role\RoleInterface;
@@ -25,17 +27,17 @@ class Role implements RoleInterface
 
     /**
      * Role constructor.
-     * @param $name
+     * @param string $name
      */
-    public function __construct($name)
+    public function __construct(string $name)
     {
-        $this->name = (string)$name;
+        $this->name = $name;
     }
 
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -43,7 +45,7 @@ class Role implements RoleInterface
     /**
      * @return string[]
      */
-    public function getPermissions()
+    public function getPermissions(): array
     {
         return $this->permissions;
     }
@@ -51,17 +53,17 @@ class Role implements RoleInterface
     /**
      * @param string $permission
      */
-    public function addPermission($permission)
+    public function addPermission(string $permission)
     {
-        $this->permissions[(string)$permission] = $permission;
+        $this->permissions[$permission] = $permission;
     }
 
     /**
      * @param string $permission
      * @return bool
      */
-    public function hasPermission($permission)
+    public function hasPermission(string $permission): bool
     {
-        return isset($this->permissions[(string)$permission]);
+        return isset($this->permissions[$permission]);
     }
 }

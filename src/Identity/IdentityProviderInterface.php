@@ -7,6 +7,8 @@
  * Time: 1:55 PM
  */
 
+declare(strict_types = 1);
+
 namespace Dot\Rbac\Identity;
 
 use Dot\Authorization\Identity\IdentityInterface;
@@ -20,5 +22,5 @@ interface IdentityProviderInterface
     /**
      * @return IdentityInterface|null
      */
-    public function getIdentity();
+    public function getIdentity(): ?IdentityInterface;
 }

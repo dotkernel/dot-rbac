@@ -7,6 +7,8 @@
  * Time: 1:55 PM
  */
 
+declare(strict_types = 1);
+
 namespace Dot\Rbac;
 
 use Dot\Authorization\Role\RoleInterface;
@@ -22,5 +24,5 @@ interface RbacInterface
      * @param string $permission
      * @return bool
      */
-    public function isGranted($roles, $permission);
+    public function isGranted(string $permission, array $roles): bool;
 }

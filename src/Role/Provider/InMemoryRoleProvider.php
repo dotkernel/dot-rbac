@@ -7,8 +7,11 @@
  * Time: 1:55 PM
  */
 
+declare(strict_types = 1);
+
 namespace Dot\Rbac\Role\Provider;
 
+use Dot\Authorization\Role\RoleInterface;
 use Dot\Rbac\Role\HierarchicalRole;
 use Dot\Rbac\Role\Role;
 
@@ -26,18 +29,21 @@ class InMemoryRoleProvider implements RoleProviderInterface
 
     /**
      * InMemoryRoleProvider constructor.
-     * @param array $config
+     * @param array $options
      */
-    public function __construct(array $config)
+    public function __construct(array $options = null)
     {
-        $this->rolesConfig = $config;
+        $options = $options ?? [];
+        if (isset($options['roles']) && is_array($options['roles'])) {
+            $this->rolesConfig = $options['roles'];
+        }
     }
 
     /**
      * @param array $roleNames
      * @return array
      */
-    public function getRoles(array $roleNames)
+    public function getRoles(array $roleNames): array
     {
         $roles = [];
 
@@ -49,10 +55,10 @@ class InMemoryRoleProvider implements RoleProviderInterface
     }
 
     /**
-     * @param $roleName
-     * @return HierarchicalRole|Role|mixed
+     * @param string $roleName
+     * @return RoleInterface
      */
-    public function getRole($roleName)
+    public function getRole(string $roleName): RoleInterface
     {
         if (isset($this->roles[$roleName])) {
             return $this->roles[$roleName];
@@ -76,7 +82,7 @@ class InMemoryRoleProvider implements RoleProviderInterface
         } else {
             $role = new Role($roleName);
         }
-        $permissions = isset($roleConfig['permissions']) ? $roleConfig['permissions'] : [];
+        $permissions = $roleConfig['permissions'] ?? [];
         foreach ($permissions as $permission) {
             $role->addPermission($permission);
         }

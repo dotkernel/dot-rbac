@@ -7,10 +7,11 @@
  * Time: 1:55 PM
  */
 
+declare(strict_types = 1);
+
 namespace Dot\Rbac;
 
 use Dot\Authorization\Role\RoleInterface;
-use Dot\Rbac\Exception\RuntimeException;
 use Dot\Rbac\Role\HierarchicalRoleInterface;
 
 /**
@@ -25,19 +26,8 @@ class Rbac implements RbacInterface
      *
      * @return bool
      */
-    public function isGranted($roles, $permission)
+    public function isGranted(string $permission, array $roles): bool
     {
-        if (!is_string($permission)) {
-            throw new RuntimeException(sprintf(
-                'Permission must be a string, "%s" given',
-                is_object($permission) ? get_class($permission) : gettype($permission)
-            ));
-        }
-
-        if ($roles instanceof RoleInterface) {
-            $roles = [$roles];
-        }
-
         foreach ($this->flattenRoles($roles) as $role) {
             if ($role->hasPermission($permission)) {
                 return true;
@@ -51,7 +41,7 @@ class Rbac implements RbacInterface
      * @param $roles
      * @return \Generator
      */
-    protected function flattenRoles($roles)
+    protected function flattenRoles(array $roles): \Generator
     {
         foreach ($roles as $role) {
             yield $role;

@@ -1,81 +1,65 @@
 <?php
 
 return [
-    //this file contains some authorization example for default services
-    //some example values are just virtual, and is not intended to work as-is
-    //modify this file with actual values, according to your needs
-    'dependencies' => [
-        //maybe you want to change the place identity is retrieved
-        //change this line and add you own IdentityProvider
-        //default is AuthenticationIdentityProvider which gets the identity from th dk-authentication service.
-        //IdentityProviderInterface::class => \Your\Identity\Provider,
-    ],
-
     'dot_authorization' => [
-        'assertion_map' => [
-            //map permissions to assertions
-            //'edit' => EditAssertion::class,
-        ],
-
-        'assertion_manager' => [
-            'factories' => [
-                //factory initialized assertions
-            ],
-            'invokables' => [
-                //invokables assertions
-                //EditAssertion::class => EditAssertion::class,
-            ],
-        ],
-
         //name of the guest role to use if no identity is provided
         'guest_role' => 'guest',
 
-        'role_provider_manager' => [
-            factories => [
-                //your custom role provider definition
-            ]
-        ],
+        'role_provider_manager' => [],
 
         //example for a flat RBAC model using the InMemoryRoleProvider
         'role_provider' => [
-            InMemoryRoleProvider::class => [
-                'admin' => [
-                    'permissions' => [
-                        'edit',
-                        'delete',
-                        'view',
-                        'create'
+            'type' => 'InMemory',
+            'options' => [
+                'roles' => [
+                    'admin' => [
+                        'permissions' => [
+                            'edit',
+                            'delete',
+                            //etc..
+                        ]
+                    ],
+                    'user' => [
+                        'permissions' => [
+                            //...
+                        ]
                     ]
-                ],
-                'user' => [
-                    'permissions' => [
-                        'edit',
-                        'view',
-                        'create'
-                    ]
-                ],
-                'guest' => [
-                    'permissions' => ['view']
                 ]
-            ]
+            ],
         ],
 
         //example for a hierarchical model, less to write but it can be confusing sometimes
         /*'role_provider' => [
-            InMemoryRoleProvider::class => [
-                //admin inherits the permissions from its child `user`
-                'admin' => [
-                    'children' => ['user'],
-                    'permissions' => ['create', 'delete']
-                ],
-                'user' => [
-                    'children' => ['guest']
-                    'permissions' => ['edit']
-                ]
-                'guest' => [
-                    'permissions' => ['view']
+            'type' => 'InMemory',
+            'options' => [
+                'roles' => [
+                    'admin' => [
+                        'children' => ['user'],
+                        'permissions' => ['create', 'delete']
+                    ],
+                    'user' => [
+                        'children' => ['guest']
+                        'permissions' => ['edit']
+                    ]
+                    'guest' => [
+                        'permissions' => ['view']
+                    ]
                 ]
             ]
-        ]*/
+        ],*/
+
+        'assertion_manager' => [
+            'factories' => [
+                //EditAssertion::class => InvokableFactory::class,
+            ],
+        ],
+
+        'assertions' => [
+            [
+                'type' => EditAssertion::class,
+                'permissions' => ['edit'],
+                'options' => []
+            ]
+        ]
     ]
 ];

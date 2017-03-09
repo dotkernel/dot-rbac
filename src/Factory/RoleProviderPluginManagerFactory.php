@@ -7,6 +7,8 @@
  * Time: 1:55 PM
  */
 
+declare(strict_types = 1);
+
 namespace Dot\Rbac\Factory;
 
 use Dot\Rbac\Role\Provider\RoleProviderPluginManager;
@@ -25,8 +27,6 @@ class RoleProviderPluginManagerFactory
     public function __invoke(ContainerInterface $container)
     {
         $config = $container->get('config')['dot_authorization']['role_provider_manager'];
-
-        $pluginManager = new RoleProviderPluginManager($container, $config);
-        return $pluginManager;
+        return new RoleProviderPluginManager($container, $config);
     }
 }

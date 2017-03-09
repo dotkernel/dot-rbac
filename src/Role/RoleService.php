@@ -7,6 +7,8 @@
  * Time: 1:55 PM
  */
 
+declare(strict_types = 1);
+
 namespace Dot\Rbac\Role;
 
 use Dot\Authorization\Identity\IdentityInterface;
@@ -68,7 +70,7 @@ class RoleService implements RoleServiceInterface
     /**
      * @return string
      */
-    public function getGuestRole()
+    public function getGuestRole(): string
     {
         return $this->guestRole;
     }
@@ -76,7 +78,7 @@ class RoleService implements RoleServiceInterface
     /**
      * @param string $guestRole
      */
-    public function setGuestRole($guestRole)
+    public function setGuestRole(string $guestRole)
     {
         $this->guestRole = $guestRole;
     }
@@ -89,7 +91,7 @@ class RoleService implements RoleServiceInterface
      * @param  string[]|RoleInterface[] $roles
      * @return bool
      */
-    public function matchIdentityRoles(array $roles)
+    public function matchIdentityRoles(array $roles): bool
     {
         $identityRoles = $this->getIdentityRoles();
         // Too easy...
@@ -114,15 +116,13 @@ class RoleService implements RoleServiceInterface
      *
      * @return RoleInterface[]
      */
-    public function getIdentityRoles()
+    public function getIdentityRoles(): array
     {
         if (!$identity = $this->getIdentity()) {
             return $this->convertRoles([$this->guestRole]);
         }
 
-        if (!$identity instanceof
-            IdentityInterface
-        ) {
+        if (!$identity instanceof IdentityInterface) {
             throw new RuntimeException(sprintf(
                 'Identity must implement %s, "%s" given',
                 IdentityInterface::class,
@@ -136,17 +136,16 @@ class RoleService implements RoleServiceInterface
     /**
      * @return IdentityInterface|null
      */
-    public function getIdentity()
+    public function getIdentity(): ?IdentityInterface
     {
         return $this->identityProvider->getIdentity();
     }
 
     /**
-     * @param $roles
-     *
+     * @param array $roles
      * @return string|string[]|RoleInterface|RoleInterface[]|\Traversable
      */
-    protected function convertRoles($roles)
+    protected function convertRoles(array $roles): array
     {
         if ($roles instanceof \Traversable) {
             $roles = iterator_to_array($roles);
@@ -178,7 +177,7 @@ class RoleService implements RoleServiceInterface
      * @param  array|RoleInterface[] $roles
      * @return \Generator
      */
-    protected function flattenRoles(array $roles)
+    protected function flattenRoles(array $roles): \Generator
     {
         foreach ($roles as $role) {
             yield $role;

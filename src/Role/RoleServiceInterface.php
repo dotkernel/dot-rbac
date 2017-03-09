@@ -7,6 +7,8 @@
  * Time: 1:55 PM
  */
 
+declare(strict_types = 1);
+
 namespace Dot\Rbac\Role;
 
 use Dot\Authorization\Identity\IdentityInterface;
@@ -17,21 +19,21 @@ interface RoleServiceInterface
     /**
      * @return IdentityInterface
      */
-    public function getIdentity();
+    public function getIdentity(): ?IdentityInterface;
 
     /**
      * @return string
      */
-    public function getGuestRole();
+    public function getGuestRole(): string;
 
     /**
      * @return RoleInterface[]
      */
-    public function getIdentityRoles();
+    public function getIdentityRoles(): array;
 
     /**
      * @param array $roles
      * @return bool
      */
-    public function matchIdentityRoles(array $roles);
+    public function matchIdentityRoles(array $roles): bool;
 }
