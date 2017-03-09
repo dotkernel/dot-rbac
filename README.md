@@ -23,87 +23,66 @@ Create a configuration file in your `config/autoload` folder and change module o
 
 ##### authorization.global.php
 ```php
-'dependencies' => [
-    //maybe you want to change the place identity is retrieved
-    //change this line and add you own IdentityProvider
-    //default is AuthenticationIdentityProvider which gets the identity from a dot-authentication service.
-    //retrieved identities must implement Dot\Authorization\Identity\IdentityInterface
-    //IdentityProviderInterface::class => \Your\Identity\Provider,
-],
-
-//all authorization config goes under this key
 'dot_authorization' => [
-    'assertion_map' => [
-        //map permissions to assertions
-        //'edit' => EditAssertion::class,
-    ],
-
-    //assertions are additional verifications during the authorization process
-    //they can further restrict user access based on custom conditions, even if the role has that permission
-    //before using assertions, you must register the in the AssertionPluginManager below
-    'assertion_manager' => [
-        'factories' => [
-            //factory initialized assertions
-        ],
-        'invokables' => [
-            //invokables assertions
-            //EditAssertion::class => EditAssertion::class,
-        ],
-    ],
-
     //name of the guest role to use if no identity is provided
     'guest_role' => 'guest',
-
-    //roles can come from various sources. We already provide an InMemoryRoleProvider that constructs the role list based on an array in the config file
-    //custom role provider can be created, for example to fetch roles from different backends. Register them here
-    'role_provider_manager' => [
-        factories => [
-            //your custom role provider definition
-        ]
-    ],
-
+    
+    'role_provider_manager' => [],
+    
     //example for a flat RBAC model using the InMemoryRoleProvider
     'role_provider' => [
-        //the key is the name of the role provider, as registered in the RoleProviderPluginManager above
-        InMemoryRoleProvider::class => [
-            'admin' => [
-                'permissions' => [
-                    'edit',
-                    'delete',
-                    'view',
-                    'create'
+        'type' => 'InMemory',
+        'options' => [
+            'roles' => [
+                'admin' => [
+                    'permissions' => [
+                        'edit',
+                        'delete',
+                        //etc..
+                    ]
+                ],
+                'user' => [
+                    'permissions' => [
+                        //...
+                    ]
                 ]
-            ],
-            'user' => [
-                'permissions' => [
-                    'edit',
-                    'view',
-                    'create'
-                ]
-            ],
-            'guest' => [
-                'permissions' => ['view']
             ]
-        ]
+        ],
     ],
-
+    
     //example for a hierarchical model, less to write but it can be confusing sometimes
     /*'role_provider' => [
-        InMemoryRoleProvider::class => [
-            //admin inherits the permissions from its child `user`
-            'admin' => [
-                'children' => ['user'],
-                'permissions' => ['create', 'delete']
-            ],
-            'user' => [
-                'children' => ['guest']
-                'permissions' => ['edit']
-            ]
-            'guest' => [
-                'permissions' => ['view']
+        'type' => 'InMemory',
+        'options' => [
+            'roles' => [
+                'admin' => [
+                    'children' => ['user'],
+                    'permissions' => ['create', 'delete']
+                ],
+                'user' => [
+                    'children' => ['guest']
+                    'permissions' => ['edit']
+                ]
+                'guest' => [
+                    'permissions' => ['view']
+                ]
             ]
         ]
-    ]*/
+    ],*/
+    
+    'assertion_manager' => [
+        'factories' => [
+            //EditAssertion::class => InvokableFactory::class,
+        ],
+    ],
+    
+    'assertions' => [
+        [
+            'type' => EditAssertion::class,
+            'permissions' => ['edit'],
+            'options' => []
+        ]
+    ]
 ]
 ```
 
