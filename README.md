@@ -1,4 +1,5 @@
 # dot-rbac
+
 Rbac authorization model implementing [dot-authorization](https://github.com/dotkernel/dot-authorization)'s `AuthorizationInterface`. An authorization service is responsible for deciding if the authenticated identity or guest has access to certain parts of the application.
 The RBAC model defines roles that can be assigned to users. The authorization is done on a role basis, not user basis as in ACL.
 Each role can have one or multiple permissions/privileges assigned. When deciding if a user is authorized, the requested permission is checked in all user roles and if at least one role has that permission, access is granted.
