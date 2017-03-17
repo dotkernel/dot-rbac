@@ -15,7 +15,7 @@ use Dot\Rbac\Options\AuthorizationOptions;
 use Dot\Rbac\Role\Provider\Factory;
 use Dot\Rbac\Role\Provider\RoleProviderPluginManager;
 use Dot\Rbac\Role\RoleService;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 
 /**
  * Class RoleServiceFactory

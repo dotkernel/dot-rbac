@@ -10,7 +10,7 @@ declare(strict_types = 1);
 namespace Dot\Rbac\Role\Provider;
 
 use Dot\Rbac\Exception\RuntimeException;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 
 /**
  * Class Factory

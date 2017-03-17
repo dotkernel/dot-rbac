@@ -10,7 +10,7 @@ declare(strict_types = 1);
 namespace Dot\Rbac\Factory;
 
 use Dot\Rbac\Assertion\AssertionPluginManager;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 
 /**
  * Class AssertionPluginManagerFactory
