@@ -11,8 +11,7 @@
   ],
   "require": {
     "php": "^7.1",
-    "container-interop/container-interop": "^1.1",
-    "zendframework/zend-servicemanager": "^3.1",
+    "zendframework/zend-servicemanager": "^3.3.0",
 
     "dotkernel/dot-authorization": "^0.1"
   },
@@ -38,7 +37,8 @@
   },
   "extra": {
     "branch-alias": {
-      "dev-master": "0.2-dev"
+      "dev-master": "0.2-dev",
+      "dev-develop": "0.3-dev"
     }
   }
 }

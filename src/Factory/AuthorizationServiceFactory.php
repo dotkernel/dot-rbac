@@ -15,7 +15,7 @@ use Dot\Rbac\Authorization\AuthorizationService;
 use Dot\Rbac\Options\AuthorizationOptions;
 use Dot\Rbac\RbacInterface;
 use Dot\Rbac\Role\RoleServiceInterface;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 
 /**
  * Class AuthorizationServiceFactory

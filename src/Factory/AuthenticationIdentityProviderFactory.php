@@ -11,7 +11,7 @@ namespace Dot\Rbac\Factory;
 
 use Dot\Authentication\AuthenticationInterface;
 use Dot\Rbac\Identity\AuthenticationIdentityProvider;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 
 /**
  * Class AuthenticationIdentityProviderFactory
