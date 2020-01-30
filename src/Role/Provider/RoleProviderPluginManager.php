@@ -9,8 +9,8 @@ declare(strict_types = 1);
 
 namespace Dot\Rbac\Role\Provider;
 
-use Zend\ServiceManager\AbstractPluginManager;
-use Zend\ServiceManager\Factory\InvokableFactory;
+use Laminas\ServiceManager\AbstractPluginManager;
+use Laminas\ServiceManager\Factory\InvokableFactory;
 
 /**
  * Class RoleProviderPluginManager
