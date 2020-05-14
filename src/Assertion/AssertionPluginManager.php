@@ -9,7 +9,7 @@ declare(strict_types = 1);
 
 namespace Dot\Rbac\Assertion;
 
-use Zend\ServiceManager\AbstractPluginManager;
+use Laminas\ServiceManager\AbstractPluginManager;
 
 /**
  * Class AssertionPluginManager

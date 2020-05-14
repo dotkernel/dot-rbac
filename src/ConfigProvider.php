@@ -24,7 +24,7 @@ use Dot\Rbac\Options\AuthorizationOptions;
 use Dot\Rbac\Role\Provider\RoleProviderPluginManager;
 use Dot\Rbac\Role\RoleService;
 use Dot\Rbac\Role\RoleServiceInterface;
-use Zend\ServiceManager\Factory\InvokableFactory;
+use Laminas\ServiceManager\Factory\InvokableFactory;
 
 /**
  * Class ConfigProvider

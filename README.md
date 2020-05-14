@@ -8,6 +8,8 @@ Each role can have one or multiple permissions/privileges assigned. When decidin
 
 Run the following command in your project root directory
 
+Requires PHP version >= 7.4
+
 ```bash
 $ composer require dotkernel/dot-rbac
 ```
