@@ -79,9 +79,9 @@ class AuthorizationService implements AuthorizationInterface
     }
 
     /**
-     * @return IdentityInterface
+     * @return mixed
      */
-    public function getIdentity(): ?IdentityInterface
+    public function getIdentity()
     {
         return $this->roleService->getIdentity();
     }

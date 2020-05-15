@@ -9,7 +9,7 @@ declare(strict_types = 1);
 
 namespace Dot\Rbac\Factory;
 
-use Dot\Authentication\AuthenticationInterface;
+use Laminas\Authentication\AuthenticationService;
 use Dot\Rbac\Identity\AuthenticationIdentityProvider;
 use Psr\Container\ContainerInterface;
 
@@ -26,6 +26,6 @@ class AuthenticationIdentityProviderFactory
      */
     public function __invoke(ContainerInterface $container, $requestedName)
     {
-        return new $requestedName($container->get(AuthenticationInterface::class));
+        return new $requestedName($container->get(AuthenticationService::class));
     }
 }
