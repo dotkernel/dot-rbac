@@ -119,22 +119,14 @@ class RoleService implements RoleServiceInterface
         if (!$identity = $this->getIdentity()) {
             return $this->convertRoles([$this->guestRole]);
         }
-
-        if (!$identity instanceof IdentityInterface) {
-            throw new RuntimeException(sprintf(
-                'Identity must implement %s, "%s" given',
-                IdentityInterface::class,
-                is_object($identity) ? get_class($identity) : gettype($identity)
-            ));
-        }
-
-        return $this->convertRoles($identity->getRoles());
+       
+        return $identity->getRoles();
     }
 
     /**
-     * @return IdentityInterface|null
+     * @return mixed|null
      */
-    public function getIdentity(): ?IdentityInterface
+    public function getIdentity()
     {
         return $this->identityProvider->getIdentity();
     }

@@ -18,7 +18,7 @@ use Dot\Authorization\Identity\IdentityInterface;
 interface IdentityProviderInterface
 {
     /**
-     * @return IdentityInterface|null
+     * @return mixed|null
      */
-    public function getIdentity(): ?IdentityInterface;
+    public function getIdentity();
 }

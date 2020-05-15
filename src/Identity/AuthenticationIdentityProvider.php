@@ -12,6 +12,7 @@ namespace Dot\Rbac\Identity;
 use Dot\Authentication\AuthenticationInterface;
 use Dot\Authorization\Identity\IdentityInterface;
 use Dot\Rbac\Exception\RuntimeException;
+use Laminas\Authentication\AuthenticationServiceInterface;
 
 /**
  * Class AuthenticationIdentityProvider
@@ -20,34 +21,27 @@ use Dot\Rbac\Exception\RuntimeException;
 class AuthenticationIdentityProvider implements IdentityProviderInterface
 {
     /**
-     * @var AuthenticationInterface
+     * @var AuthenticationServiceInterface
      */
     protected $authentication;
 
     /**
      * AuthenticationIdentityProvider constructor.
-     * @param AuthenticationInterface $authentication
+     * @param AuthenticationServiceInterface $authentication
      */
-    public function __construct(AuthenticationInterface $authentication)
+    public function __construct(AuthenticationServiceInterface $authentication)
     {
         $this->authentication = $authentication;
     }
 
     /**
-     * @return IdentityInterface
+     * @return mixed|null
      * @throws \Exception
      */
-    public function getIdentity(): ?IdentityInterface
+    public function getIdentity()
     {
         $identity = $this->authentication->getIdentity();
 
-        if (!is_null($identity) && !$identity instanceof IdentityInterface) {
-            throw new RuntimeException(sprintf(
-                'Authenticated identity must be an instance of %s, "%s" given',
-                IdentityInterface::class,
-                is_object($identity) ? get_class($identity) : gettype($identity)
-            ));
-        }
         return $identity;
     }
 }

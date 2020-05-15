@@ -15,9 +15,9 @@ use Dot\Authorization\Role\RoleInterface;
 interface RoleServiceInterface
 {
     /**
-     * @return IdentityInterface
+     * @return mixed|null
      */
-    public function getIdentity(): ?IdentityInterface;
+    public function getIdentity();
 
     /**
      * @return string
