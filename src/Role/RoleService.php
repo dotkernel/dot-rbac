@@ -120,7 +120,7 @@ class RoleService implements RoleServiceInterface
             return $this->convertRoles([$this->guestRole]);
         }
        
-        return $identity->getRoles();
+        return $this->convertRoles($identity->getRoles());
     }
 
     /**
@@ -147,6 +147,10 @@ class RoleService implements RoleServiceInterface
             if ($role instanceof RoleInterface) {
                 $collectedRoles[] = $role;
                 continue;
+            }
+
+            if (method_exists($role, 'getName')) {
+                $role = $role->getName();
             }
             // Otherwise, it's a string and hence we need to collect it
             $toCollect[] = (string)$role;

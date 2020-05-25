@@ -25,9 +25,9 @@ class Rbac implements RbacInterface
      * @return bool
      */
     public function isGranted(string $permission, array $roles): bool
-    {   
+    {
         foreach ($this->flattenRoles($roles) as $role) {
-            if ($role->getName() === $permission) {
+            if ($role->hasPermission($permission)) {
                 return true;
             }
         }
