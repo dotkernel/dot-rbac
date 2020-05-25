@@ -9,7 +9,6 @@ declare(strict_types = 1);
 
 namespace Dot\Rbac\Identity;
 
-use Dot\Authentication\AuthenticationInterface;
 use Dot\Authorization\Identity\IdentityInterface;
 use Dot\Rbac\Exception\RuntimeException;
 use Laminas\Authentication\AuthenticationServiceInterface;
