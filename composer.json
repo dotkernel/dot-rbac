@@ -3,7 +3,7 @@
     "type": "library",
     "description": "DotKernel RBAC authorization component",
     "license": "MIT",
-    "homepage": "https://github.com/dotkernel/dot-navigation",
+    "homepage": "https://github.com/dotkernel/dot-rbac",
     "keywords": [
         "laminas",
         "mezzio",
