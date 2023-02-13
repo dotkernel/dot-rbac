@@ -5,19 +5,19 @@
     "license": "MIT",
     "authors": [
         {
-            "name": "n3vrax",
-            "email": "tibi@apidemia.com"
+            "name": "DotKernel Team",
+            "email": "team@dotkernel.com"
         }
     ],
     "require": {
-        "php": "^7.2",
+        "php": "~8.0.0 || ~8.1.0 || ~8.2.0",
         "laminas/laminas-servicemanager": "^3.3.0",
-        "dotkernel/dot-authorization": "^2.0",
-        "laminas/laminas-dependency-plugin": "^1.0"
+        "dotkernel/dot-authorization": "^3.2",
+        "laminas/laminas-dependency-plugin": "^2.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "^4.8",
-        "squizlabs/php_codesniffer": "^2.3",
+        "phpunit/phpunit": "^9.5",
+        "squizlabs/php_codesniffer": "^3.7",
         "laminas/laminas-stdlib": "^3.2",
         "dotkernel/dot-authentication": "^2.0"
     },
@@ -27,17 +27,6 @@
     "autoload": {
         "psr-4": {
             "Dot\\Rbac\\": "src/"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "DotTest\\Rbac\\": "test/"
-        }
-    },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "2.0-dev",
-            "dev-develop": "2.1-dev"
         }
     }
 }
