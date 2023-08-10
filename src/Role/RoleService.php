@@ -28,12 +28,12 @@ class RoleService implements RoleServiceInterface
         $this->roleProvider     = $roleProvider;
     }
 
-    public function setIdentityProvider(IdentityProviderInterface $identityProvider)
+    public function setIdentityProvider(IdentityProviderInterface $identityProvider): void
     {
         $this->identityProvider = $identityProvider;
     }
 
-    public function setRoleProvider(RoleProviderInterface $roleProvider)
+    public function setRoleProvider(RoleProviderInterface $roleProvider): void
     {
         $this->roleProvider = $roleProvider;
     }
@@ -43,7 +43,7 @@ class RoleService implements RoleServiceInterface
         return $this->guestRole;
     }
 
-    public function setGuestRole(string $guestRole)
+    public function setGuestRole(string $guestRole): void
     {
         $this->guestRole = $guestRole;
     }

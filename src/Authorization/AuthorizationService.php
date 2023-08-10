@@ -31,7 +31,7 @@ class AuthorizationService implements AuthorizationInterface
         $this->assertionFactory = $assertionFactory;
     }
 
-    public function addAssertion(string $permission, mixed $assertion)
+    public function addAssertion(string $permission, mixed $assertion): void
     {
         if (! is_array($assertion) && ! $assertion instanceof AssertionInterface) {
             throw new RuntimeException(

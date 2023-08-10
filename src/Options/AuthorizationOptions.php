@@ -23,7 +23,7 @@ class AuthorizationOptions extends AbstractOptions
         return $this->guestRole;
     }
 
-    public function setGuestRole(string $guestRole)
+    public function setGuestRole(string $guestRole): void
     {
         $this->guestRole = $guestRole;
     }
@@ -33,7 +33,7 @@ class AuthorizationOptions extends AbstractOptions
         return $this->assertions;
     }
 
-    public function setAssertions(array $assertions)
+    public function setAssertions(array $assertions): void
     {
         $this->assertions = $assertions;
     }
@@ -43,7 +43,7 @@ class AuthorizationOptions extends AbstractOptions
         return $this->roleProvider;
     }
 
-    public function setRoleProvider(array $roleProvider)
+    public function setRoleProvider(array $roleProvider): void
     {
         $this->roleProvider = $roleProvider;
     }

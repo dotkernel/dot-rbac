@@ -27,7 +27,7 @@ class Role implements RoleInterface
         return $this->permissions;
     }
 
-    public function addPermission(string $permission)
+    public function addPermission(string $permission): void
     {
         $this->permissions[$permission] = $permission;
     }

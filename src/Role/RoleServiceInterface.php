@@ -6,7 +6,7 @@ namespace Dot\Rbac\Role;
 
 interface RoleServiceInterface
 {
-    public function getIdentity();
+    public function getIdentity(): mixed;
 
     public function getGuestRole(): string;
 
