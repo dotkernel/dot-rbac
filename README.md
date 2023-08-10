@@ -9,7 +9,7 @@ Each role can have one or multiple permissions/privileges assigned. When decidin
 
 [![GitHub issues](https://img.shields.io/github/issues/dotkernel/dot-rbac)](https://github.com/dotkernel/dot-rbac/issues)
 [![GitHub forks](https://img.shields.io/github/forks/dotkernel/dot-rbac)](https://github.com/dotkernel/dot-rbac/network)
-[![GitHub stars](https://img.shields.io/github/stars/dotkernel/dot-form)](https://github.com/dotkernel/dot-rbac/stargazers)
+[![GitHub stars](https://img.shields.io/github/stars/dotkernel/dot-rbac)](https://github.com/dotkernel/dot-rbac/stargazers)
 [![GitHub license](https://img.shields.io/github/license/dotkernel/dot-rbac)](https://github.com/dotkernel/dot-rbac/blob/3.3.0/LICENSE.md)
 
 [![Build Static](https://github.com/dotkernel/dot-rbac/actions/workflows/static-analysis.yml/badge.svg?branch=3.0)](https://github.com/dotkernel/dot-rbac/actions/workflows/static-analysis.yml)
