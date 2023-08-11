@@ -11,13 +11,10 @@ use function sprintf;
 
 class Factory
 {
-    protected ContainerInterface $container;
-    protected ?AssertionPluginManager $assertionPluginManager;
-
-    public function __construct(ContainerInterface $container, ?AssertionPluginManager $assertionPluginManager = null)
-    {
-        $this->container              = $container;
-        $this->assertionPluginManager = $assertionPluginManager;
+    public function __construct(
+        protected ContainerInterface $container,
+        protected ?AssertionPluginManager $assertionPluginManager = null
+    ) {
     }
 
     public function create(array $specs): AssertionInterface
@@ -27,8 +24,7 @@ class Factory
             throw new RuntimeException(sprintf('Invalid assertion type `%s`', $type));
         }
 
-        $assertionManager = $this->getAssertionPluginManager();
-        return $assertionManager->get($type, $specs['options'] ?? null);
+        return $this->getAssertionPluginManager()->get($type, $specs['options'] ?? null);
     }
 
     public function getAssertionPluginManager(): AssertionPluginManager

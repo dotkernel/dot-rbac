@@ -27,8 +27,8 @@ class AuthenticationIdentityProviderFactoryTest extends TestCase
     }
 
     /**
-     * @throws Exception
      * @throws ContainerExceptionInterface
+     * @throws Exception
      * @throws NotFoundExceptionInterface
      */
     public function testWillCreateService(): void
@@ -37,9 +37,8 @@ class AuthenticationIdentityProviderFactoryTest extends TestCase
             ->willReturnMap([
                 [AuthenticationService::class, $this->createMock(AuthenticationService::class)],
             ]);
-        $requestedName = AuthenticationIdentityProvider::class;
 
-        $result = (new AuthenticationIdentityProviderFactory())($this->container, $requestedName);
+        $result = (new AuthenticationIdentityProviderFactory())($this->container);
         $this->assertInstanceOf(AuthenticationIdentityProvider::class, $result);
     }
 }

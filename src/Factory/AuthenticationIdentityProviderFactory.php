@@ -16,8 +16,8 @@ class AuthenticationIdentityProviderFactory
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      */
-    public function __invoke(ContainerInterface $container, string $requestedName): AuthenticationIdentityProvider
+    public function __invoke(ContainerInterface $container): AuthenticationIdentityProvider
     {
-        return new $requestedName($container->get(AuthenticationService::class));
+        return new AuthenticationIdentityProvider($container->get(AuthenticationService::class));
     }
 }

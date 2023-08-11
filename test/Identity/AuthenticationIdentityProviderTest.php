@@ -14,7 +14,7 @@ class AuthenticationIdentityProviderTest extends TestCase
     /**
      * @throws Exception
      */
-    public function testGetIdentity()
+    public function testGetIdentity(): void
     {
         $identity             = $this->createMock(AuthenticationServiceInterface::class);
         $authIdentityProvider = new AuthenticationIdentityProvider($identity);

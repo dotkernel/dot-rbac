@@ -22,14 +22,13 @@ class AuthorizationServiceFactory
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      */
-    public function __invoke(ContainerInterface $container, string $requestedName): AuthorizationService
+    public function __invoke(ContainerInterface $container): AuthorizationService
     {
         $rbac             = $container->get(RbacInterface::class);
         $roleService      = $container->get(RoleServiceInterface::class);
         $assertionFactory = new Factory($container, $container->get(AssertionPluginManager::class));
 
-        /** @var AuthorizationService $service */
-        $service = new $requestedName($rbac, $roleService, $assertionFactory);
+        $service = new AuthorizationService($rbac, $roleService, $assertionFactory);
 
         /** @var AuthorizationOptions $moduleOptions */
         $moduleOptions = $container->get(AuthorizationOptions::class);

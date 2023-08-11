@@ -8,13 +8,10 @@ use Dot\Authorization\Role\RoleInterface;
 
 class Role implements RoleInterface
 {
-    protected string $name;
-
     protected array $permissions = [];
 
-    public function __construct(string $name)
+    public function __construct(protected string $name)
     {
-        $this->name = $name;
     }
 
     public function getName(): string

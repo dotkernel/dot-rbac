@@ -8,11 +8,8 @@ use Laminas\Authentication\AuthenticationServiceInterface;
 
 class AuthenticationIdentityProvider implements IdentityProviderInterface
 {
-    protected AuthenticationServiceInterface $authentication;
-
-    public function __construct(AuthenticationServiceInterface $authentication)
+    public function __construct(protected AuthenticationServiceInterface $authentication)
     {
-        $this->authentication = $authentication;
     }
 
     public function getIdentity(): mixed

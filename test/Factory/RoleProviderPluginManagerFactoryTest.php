@@ -15,8 +15,8 @@ use Psr\Container\NotFoundExceptionInterface;
 class RoleProviderPluginManagerFactoryTest extends TestCase
 {
     /**
-     * @throws Exception
      * @throws ContainerExceptionInterface
+     * @throws Exception
      * @throws NotFoundExceptionInterface
      */
     public function testCanCreate(): void

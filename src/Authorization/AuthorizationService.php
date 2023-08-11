@@ -16,19 +16,13 @@ use function sprintf;
 
 class AuthorizationService implements AuthorizationInterface
 {
-    protected RbacInterface $rbac;
-    protected RoleServiceInterface $roleService;
-    protected Factory $assertionFactory;
     protected array $assertions = [];
 
     public function __construct(
-        RbacInterface $rbac,
-        RoleServiceInterface $roleService,
-        Factory $assertionFactory
+        protected RbacInterface $rbac,
+        protected RoleServiceInterface $roleService,
+        protected Factory $assertionFactory
     ) {
-        $this->rbac             = $rbac;
-        $this->roleService      = $roleService;
-        $this->assertionFactory = $assertionFactory;
     }
 
     public function addAssertion(string $permission, mixed $assertion): void

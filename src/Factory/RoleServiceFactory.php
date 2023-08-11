@@ -20,7 +20,7 @@ class RoleServiceFactory
      * @throws NotFoundExceptionInterface
      * @throws ContainerExceptionInterface
      */
-    public function __invoke(ContainerInterface $container, string $requestedName): RoleService
+    public function __invoke(ContainerInterface $container): RoleService
     {
         $authorizationOptions = $container->get(AuthorizationOptions::class);
         $identityProvider     = $container->get(IdentityProviderInterface::class);
@@ -32,8 +32,7 @@ class RoleServiceFactory
 
         $factory      = new Factory($container, $container->get(RoleProviderPluginManager::class));
         $roleProvider = $factory->create($roleProviderConfig);
-        /** @var RoleService $service */
-        $service = new $requestedName($identityProvider, $roleProvider);
+        $service      = new RoleService($identityProvider, $roleProvider);
         $service->setGuestRole($authorizationOptions->getGuestRole());
 
         return $service;

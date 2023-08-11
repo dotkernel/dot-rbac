@@ -4,13 +4,17 @@ declare(strict_types=1);
 
 namespace DotTest\Rbac;
 
+use Dot\Authorization\AuthorizationInterface;
 use Dot\Rbac\Assertion\AssertionPluginManager;
 use Dot\Rbac\Authorization\AuthorizationService;
 use Dot\Rbac\ConfigProvider;
 use Dot\Rbac\Identity\AuthenticationIdentityProvider;
+use Dot\Rbac\Identity\IdentityProviderInterface;
 use Dot\Rbac\Options\AuthorizationOptions;
+use Dot\Rbac\RbacInterface;
 use Dot\Rbac\Role\Provider\RoleProviderPluginManager;
 use Dot\Rbac\Role\RoleService;
+use Dot\Rbac\Role\RoleServiceInterface;
 use PHPUnit\Framework\TestCase;
 
 class ConfigProviderTest extends TestCase
@@ -34,8 +38,8 @@ class ConfigProviderTest extends TestCase
 
     public function testDependenciesHasFactories(): void
     {
-        $factories = $this->config['dependencies']['factories'];
         $this->assertArrayHasKey('factories', $this->config['dependencies']);
+        $factories = $this->config['dependencies']['factories'];
         $this->assertArrayHasKey(AuthenticationIdentityProvider::class, $factories);
         $this->assertArrayHasKey(RoleProviderPluginManager::class, $factories);
         $this->assertArrayHasKey(RoleService::class, $factories);
@@ -52,5 +56,15 @@ class ConfigProviderTest extends TestCase
         $this->assertArrayHasKey('assertion_manager', $config);
         $this->assertArrayHasKey('role_provider', $config);
         $this->assertArrayHasKey('role_provider_manager', $config);
+    }
+
+    public function testDependenciesHasAliases(): void
+    {
+        $this->assertArrayHasKey('aliases', $this->config['dependencies']);
+        $aliases = $this->config['dependencies']['aliases'];
+        $this->assertArrayHasKey(RbacInterface::class, $aliases);
+        $this->assertArrayHasKey(AuthorizationInterface::class, $aliases);
+        $this->assertArrayHasKey(RoleServiceInterface::class, $aliases);
+        $this->assertArrayHasKey(IdentityProviderInterface::class, $aliases);
     }
 }

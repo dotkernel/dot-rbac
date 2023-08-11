@@ -16,16 +16,12 @@ use function method_exists;
 
 class RoleService implements RoleServiceInterface
 {
-    protected IdentityProviderInterface $identityProvider;
-    protected RoleProviderInterface $roleProvider;
     protected string $guestRole = 'guest';
 
     public function __construct(
-        IdentityProviderInterface $identityProvider,
-        RoleProviderInterface $roleProvider
+        protected IdentityProviderInterface $identityProvider,
+        protected RoleProviderInterface $roleProvider
     ) {
-        $this->identityProvider = $identityProvider;
-        $this->roleProvider     = $roleProvider;
     }
 
     public function setIdentityProvider(IdentityProviderInterface $identityProvider): void

@@ -15,8 +15,8 @@ use Psr\Container\NotFoundExceptionInterface;
 class AssertionPluginManagerFactoryTest extends TestCase
 {
     /**
-     * @throws Exception
      * @throws ContainerExceptionInterface
+     * @throws Exception
      * @throws NotFoundExceptionInterface
      */
     public function testCanCreateManager(): void

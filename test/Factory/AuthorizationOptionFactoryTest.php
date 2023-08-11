@@ -15,8 +15,8 @@ use Psr\Container\NotFoundExceptionInterface;
 class AuthorizationOptionFactoryTest extends TestCase
 {
     /**
-     * @throws Exception
      * @throws ContainerExceptionInterface
+     * @throws Exception
      * @throws NotFoundExceptionInterface
      */
     public function testCanCreateInterface(): void
@@ -27,9 +27,7 @@ class AuthorizationOptionFactoryTest extends TestCase
             ->with('config')
             ->willReturn(['dot_authorization' => null]);
 
-        $requestedName = AuthorizationOptions::class;
-
-        $interface = (new AuthorizationOptionsFactory())($container, $requestedName);
+        $interface = (new AuthorizationOptionsFactory())($container);
         $this->assertInstanceOf(AuthorizationOptions::class, $interface);
     }
 }

@@ -19,8 +19,8 @@ use Psr\Container\NotFoundExceptionInterface;
 class AuthorizationServiceFactoryTest extends TestCase
 {
     /**
-     * @throws Exception
      * @throws ContainerExceptionInterface
+     * @throws Exception
      * @throws NotFoundExceptionInterface
      */
     public function testWillCreateService(): void
@@ -46,9 +46,7 @@ class AuthorizationServiceFactoryTest extends TestCase
             ],
         );
 
-        $requestedName = AuthorizationService::class;
-        $service       = (new AuthorizationServiceFactory())($container, $requestedName);
-
+        $service = (new AuthorizationServiceFactory())($container);
         $this->assertInstanceOf(AuthorizationService::class, $service);
     }
 }

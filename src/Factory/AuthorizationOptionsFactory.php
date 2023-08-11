@@ -15,8 +15,8 @@ class AuthorizationOptionsFactory
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      */
-    public function __invoke(ContainerInterface $container, string $requestedName): AuthorizationOptions
+    public function __invoke(ContainerInterface $container): AuthorizationOptions
     {
-        return new $requestedName($container->get('config')['dot_authorization']);
+        return new AuthorizationOptions($container->get('config')['dot_authorization']);
     }
 }

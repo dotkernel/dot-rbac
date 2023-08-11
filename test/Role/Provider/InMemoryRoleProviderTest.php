@@ -23,7 +23,6 @@ class InMemoryRoleProviderTest extends TestCase
         $roles = ['roles', 'testRole'];
 
         $roles = $memoryRoleProvide->getRoles($roles);
-        $this->assertIsArray($roles);
         $this->assertCount(2, $roles);
     }
 }

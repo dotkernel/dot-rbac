@@ -10,14 +10,12 @@ use Psr\Container\ContainerInterface;
 class Factory
 {
     protected ContainerInterface $container;
-    protected ?RoleProviderPluginManager $roleProviderPluginManager;
 
     public function __construct(
         ContainerInterface $container,
-        ?RoleProviderPluginManager $roleProviderPluginManager = null
+        protected ?RoleProviderPluginManager $roleProviderPluginManager = null
     ) {
-        $this->container                 = $container;
-        $this->roleProviderPluginManager = $roleProviderPluginManager;
+        $this->container = $container;
     }
 
     public function create(array $specs): RoleProviderInterface

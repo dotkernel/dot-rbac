@@ -18,8 +18,8 @@ use RuntimeException;
 class RoleServiceFactoryTest extends TestCase
 {
     /**
-     * @throws Exception
      * @throws ContainerExceptionInterface
+     * @throws Exception
      * @throws NotFoundExceptionInterface
      */
     public function testWillCreateService(): void
@@ -42,7 +42,7 @@ class RoleServiceFactoryTest extends TestCase
             ]
         );
 
-        $service = (new RoleServiceFactory())($container, RoleService::class);
+        $service = (new RoleServiceFactory())($container);
 
         $this->assertInstanceOf(RoleService::class, $service);
     }
@@ -68,6 +68,6 @@ class RoleServiceFactoryTest extends TestCase
             ]
         );
 
-        (new RoleServiceFactory())($container, RoleService::class);
+        (new RoleServiceFactory())($container);
     }
 }
