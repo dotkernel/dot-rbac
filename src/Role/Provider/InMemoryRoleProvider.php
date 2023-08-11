@@ -1,11 +1,6 @@
 <?php
-/**
- * @see https://github.com/dotkernel/dot-rbac/ for the canonical source repository
- * @copyright Copyright (c) 2017 Apidemia (https://www.apidemia.com)
- * @license https://github.com/dotkernel/dot-rbac/blob/master/LICENSE.md MIT License
- */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Dot\Rbac\Role\Provider;
 
@@ -13,23 +8,14 @@ use Dot\Authorization\Role\RoleInterface;
 use Dot\Rbac\Role\HierarchicalRole;
 use Dot\Rbac\Role\Role;
 
-/**
- * Class InMemoryRoleProvider
- * @package Dot\Rbac\Role
- */
+use function is_array;
+
 class InMemoryRoleProvider implements RoleProviderInterface
 {
-    /** @var array */
-    protected $roles = [];
+    protected array $roles       = [];
+    protected array $rolesConfig = [];
 
-    /** @var array */
-    protected $rolesConfig = [];
-
-    /**
-     * InMemoryRoleProvider constructor.
-     * @param array $options
-     */
-    public function __construct(array $options = null)
+    public function __construct(?array $options = null)
     {
         $options = $options ?? [];
         if (isset($options['roles']) && is_array($options['roles'])) {
@@ -37,10 +23,6 @@ class InMemoryRoleProvider implements RoleProviderInterface
         }
     }
 
-    /**
-     * @param array $roleNames
-     * @return array
-     */
     public function getRoles(array $roleNames): array
     {
         $roles = [];
@@ -52,27 +34,22 @@ class InMemoryRoleProvider implements RoleProviderInterface
         return $roles;
     }
 
-    /**
-     * @param string $roleName
-     * @return RoleInterface
-     */
     public function getRole(string $roleName): RoleInterface
     {
         if (isset($this->roles[$roleName])) {
             return $this->roles[$roleName];
         }
 
-        //if no config, create a simple role with no permission
-        if (!isset($this->rolesConfig[$roleName])) {
-            $role = new Role($roleName);
+        if (! isset($this->rolesConfig[$roleName])) {
+            $role                   = new Role($roleName);
             $this->roles[$roleName] = $role;
             return $role;
         }
 
         $roleConfig = $this->rolesConfig[$roleName];
         if (isset($roleConfig['children'])) {
-            $role = new HierarchicalRole($roleName);
-            $childRoles = (array)$roleConfig['children'];
+            $role       = new HierarchicalRole($roleName);
+            $childRoles = (array) $roleConfig['children'];
             foreach ($childRoles as $childRole) {
                 $childRole = $this->getRole($childRole);
                 $role->addChild($childRole);
