@@ -6,6 +6,10 @@ namespace Dot\Rbac\Options;
 
 use Laminas\Stdlib\AbstractOptions;
 
+/**
+ * @template TValue
+ * @template-extends AbstractOptions<TValue>
+ */
 class AuthorizationOptions extends AbstractOptions
 {
     protected string $guestRole   = 'guest';

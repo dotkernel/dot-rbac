@@ -5,7 +5,7 @@ The RBAC model defines roles that can be assigned to users. The authorization is
 Each role can have one or multiple permissions/privileges assigned. When deciding if a user is authorized, the requested permission is checked in all user roles and if at least one role has that permission, access is granted.
 
 ![OSS Lifecycle](https://img.shields.io/osslifecycle/dotkernel/dot-rbac)
-![PHP from Packagist (specify version)](https://img.shields.io/packagist/php-v/dotkernel/dot-rbac/3.5.0)
+![PHP from Packagist (specify version)](https://img.shields.io/packagist/php-v/dotkernel/dot-rbac/3.5.2)
 
 [![GitHub issues](https://img.shields.io/github/issues/dotkernel/dot-rbac)](https://github.com/dotkernel/dot-rbac/issues)
 [![GitHub forks](https://img.shields.io/github/forks/dotkernel/dot-rbac)](https://github.com/dotkernel/dot-rbac/network)
