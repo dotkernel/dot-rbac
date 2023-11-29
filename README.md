@@ -13,6 +13,7 @@ Each role can have one or multiple permissions/privileges assigned. When decidin
 [![GitHub license](https://img.shields.io/github/license/dotkernel/dot-rbac)](https://github.com/dotkernel/dot-rbac/blob/3.0/LICENSE.md)
 
 [![Build Static](https://github.com/dotkernel/dot-rbac/actions/workflows/static-analysis.yml/badge.svg?branch=3.0)](https://github.com/dotkernel/dot-rbac/actions/workflows/static-analysis.yml)
+[![codecov](https://codecov.io/gh/dotkernel/dot-rbac/graph/badge.svg?token=GCK6C92N83)](https://codecov.io/gh/dotkernel/dot-rbac)
 
 [![SymfonyInsight](https://insight.symfony.com/projects/ce0cfbb2-7e97-427b-b394-531ff5be13d6/big.svg)](https://insight.symfony.com/projects/ce0cfbb2-7e97-427b-b394-531ff5be13d6)
 
