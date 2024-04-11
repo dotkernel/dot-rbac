@@ -1,0 +1,19 @@
+docs_dir: docs/book
+site_dir: docs/html
+extra:
+  project: Packages
+  current_version: v3
+  versions:
+    - v3
+nav:
+  - Home: index.md
+  - v3:
+      - Installation: v3/installation.md
+      - Configuration: v3/configuration.md
+      - Usage: v3/usage.md
+      - Customization: v3/customization.md
+site_name: dot-rbac
+site_description: "The rbac authorization service decides if the authenticated identity or guest has access to certain parts of the application"
+repo_url: "https://github.com/dotkernel/dot-rbac"
+plugins:
+  - search
