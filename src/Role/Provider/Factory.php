@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Dot\Rbac\Role\Provider;
 
 use Dot\Rbac\Exception\RuntimeException;
+use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
 
 class Factory
@@ -15,6 +16,9 @@ class Factory
     ) {
     }
 
+    /**
+     * @throws ContainerExceptionInterface
+     */
     public function create(array $specs): RoleProviderInterface
     {
         $type = $specs['type'] ?? '';
@@ -23,7 +27,7 @@ class Factory
         }
 
         $roleProviderManager = $this->getRoleProviderPluginManager();
-        return $roleProviderManager->get($type, $specs['options'] ?? null);
+        return $roleProviderManager->build($type, $specs['options'] ?? null);
     }
 
     public function getRoleProviderPluginManager(): RoleProviderPluginManager
