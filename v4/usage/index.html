@@ -18,11 +18,11 @@
         <meta name="docsearch:component" content="dot-rbac">
 
         
-        <link rel="canonical" href="https://docs.dotkernel.org/dot-rbac/v3/customization/">
+        <link rel="canonical" href="https://docs.dotkernel.org/dot-rbac/v4/usage/">
         
         <link rel="shortcut icon" href="https://docs.dotkernel.org/img/dk_docs_favicon_white.svg">
 
-        <title>Customization - dot-rbac - DotKernel Documentation</title>
+        <title>Usage - dot-rbac - DotKernel Documentation</title>
 
         <link rel="stylesheet" href="https://docs.dotkernel.org/css/bootstrap.css">
         <link rel="stylesheet" href="https://docs.dotkernel.org/css/bootstrap-icons.min.css">
@@ -136,13 +136,13 @@
     <div class="btn-group">
         <button type="button" class="btn dropdown-toggle bg-light" data-toggle="dropdown" data-display="static" aria-haspopup="true" aria-expanded="false" id="version-selector-dropdown">
             
-                v3
+                v4
             
         </button>
         <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-left" aria-labelledby="version-selector-dropdown">
             
                 
-                    <a href="../../v4/installation/" class="dropdown-item">
+                    <a href="../installation/" class="dropdown-item active">
                         
                             v4 (latest)
                         
@@ -150,7 +150,7 @@
                 
             
                 
-                    <a href="../installation/" class="dropdown-item active">
+                    <a href="../../v3/installation/" class="dropdown-item">
                         
                             v3
                         
@@ -185,7 +185,7 @@
                         
                     
 
-                    <li class="breadcrumb-item active" aria-current="page">Customization</li>
+                    <li class="breadcrumb-item active" aria-current="page">Usage</li>
                 
             
         </ol>
@@ -210,14 +210,6 @@
 
                 
                 
-
-                    
-                    
-                
-            
-
-                
-                
                     
                         
 <li class="subnavigation__list-item ">
@@ -232,16 +224,24 @@
 
                     
                         
-<li class="subnavigation__list-item ">
-    <a href="../usage/" class="subnavigation__link">Usage</a>
+<li class="subnavigation__list-item subnavigation__list-item--active">
+    <a href="./" class="subnavigation__link">Usage</a>
 </li>
 
                     
                         
-<li class="subnavigation__list-item subnavigation__list-item--active">
-    <a href="./" class="subnavigation__link">Customization</a>
+<li class="subnavigation__list-item ">
+    <a href="../customization/" class="subnavigation__link">Customization</a>
 </li>
 
+                    
+                
+            
+
+                
+                
+
+                    
                     
                 
             
@@ -262,15 +262,11 @@
             <ul class="toc__list">
             
                 <li class="toc__entry">
-                    <a href="#customize-the-identityprovider" class="toc__link nav-link">Customize the IdentityProvider</a>
+                    <a href="#first-method" class="toc__link nav-link">First method</a>
                 </li>
             
                 <li class="toc__entry">
-                    <a href="#custom-role-providers" class="toc__link nav-link">Custom role providers</a>
-                </li>
-            
-                <li class="toc__entry">
-                    <a href="#creating-assertions" class="toc__link nav-link">Creating assertions</a>
+                    <a href="#second-method" class="toc__link nav-link">Second method</a>
                 </li>
             
             </ul>
@@ -283,37 +279,21 @@
                     
                     
 
-    <div class="alert alert-danger alert-caution" role="alert">
-        <p class="mb-0">
-            The documentation you are viewing is for an older version of this component.<br>
-            <a href="../..">Switch to the latest (v4) version.</a>
-        </p>
-    </div>
-
 
 
 
     
     
 
-    <h1 id="customization">Customization</h1>
-<h2 id="customize-the-identityprovider">Customize the IdentityProvider</h2>
-<p>Whenever you request an authorization check on the authenticated identity, the identity will be provided to the <code>AuthorizationService</code> through a registered <code>IdentityProviderInterface</code> service.</p>
-<p>This is because identity is authentication dependent, so the module lets you overwrite this service, depending on your needs.
-If you want to get the identity from other sources instead of the dot-authentication service, just overwrite the <code>IdentityProviderInterface::class</code> service in the service manager with your own implementation of this interface.</p>
-<h2 id="custom-role-providers">Custom role providers</h2>
-<p>Write your own role provider by implementing the <code>RoleProviderInterface</code> and register it in the <code>RoleProviderPluginManager</code>.
-After that, you can use them in the configuration file, as described above.</p>
-<h2 id="creating-assertions">Creating assertions</h2>
-<p>Assertions are checked after permission granting, right before returning the authorization result.
-Assertions can have a last word in deciding if someone is authorized for the requested action.
-A good assertion example could be an edit permission, but with the restriction that it should be able to edit the item just if the <code>user id</code> matches the item's <code>owner id</code>.
-It is up to you to write the logic inside an assertion.</p>
-<p>An assertion has to implement the <code>AssertionInterface</code> and be registered in the <code>AssertionPluginManager</code>.</p>
-<p>This interface defines the following method</p>
-<pre class="highlight"><code class="language-php">public function assert(AuthorizationInterface $authorization, $context = null);</code></pre>
-<p>The context variable can be any external data that an assertion needs in order to decide the authorization status.
-The assertion must return a boolean value, reflecting the assertion pass or failure status.</p>
+    <h1 id="usage">Usage</h1>
+<p>Whenever you need to check if someone is authorized to take some actions, inject the <code>AuthorizationInterface::class</code> service into your class, then call the <code>isGranted</code> method with the correct parameters.
+There are 2 ways to call the isGranted method.</p>
+<h2 id="first-method">First method</h2>
+<p>Specify which roles you want to check.</p>
+<pre class="highlight"><code class="language-php">$isGranted = $this-&gt;authorizationService-&gt;isGranted($permission, $roles);</code></pre>
+<h2 id="second-method">Second method</h2>
+<p>Do not specify the roles or send an empty array as the second parameter. This will check if the authenticated identity has permission.</p>
+<pre class="highlight"><code class="language-php">$isGranted = $this-&gt;authorizationService-&gt;isGranted($permission);</code></pre>
 
 
 
@@ -323,15 +303,20 @@ The assertion must return a boolean value, reflecting the assertion pass or fail
         
         <li class="col text-nowrap text-md-start">
             
-                <a rel="prev" class="page-nav__link page-nav__link--prev" href="../usage/">
+                <a rel="prev" class="page-nav__link page-nav__link--prev" href="../configuration/">
                     <i class="bi bi-chevron-left"></i>
-                    Usage
+                    Configuration
                 </a>
             
         </li>
 
         
         <li class="col text-nowrap text-md-end pe-0">
+            
+                <a rel="next" class="page-nav__link page-nav__link--next" href="../customization/">
+                    Customization
+                    <i class="bi bi-chevron-right"></i>
+                </a>
             
         </li>
     </ul>
