@@ -1,17 +1,17 @@
 {
     "name": "dotkernel/dot-rbac",
     "type": "library",
-    "description": "DotKernel RBAC authorization component",
+    "description": "Dotkernel RBAC authorization component",
     "license": "MIT",
     "homepage": "https://github.com/dotkernel/dot-rbac",
     "keywords": [
+        "authorization",
         "laminas",
-        "mezzio",
         "rbac"
     ],
     "authors": [
         {
-            "name": "DotKernel Team",
+            "name": "Dotkernel Team",
             "email": "team@dotkernel.com"
         }
     ],
@@ -22,16 +22,16 @@
         }
     },
     "require": {
-        "php": "~8.1.0 || ~8.2.0 || ~8.3.0",
-        "laminas/laminas-servicemanager":  "^3.11",
-        "dotkernel/dot-authorization": "^3.4.1",
-        "laminas/laminas-stdlib": "^3.7",
-        "laminas/laminas-authentication": "2.16.0"
+        "php": "~8.1.0 || ~8.2.0 || ~8.3.0 || ~8.4.0",
+        "dotkernel/dot-authorization": "^3.6.0",
+        "laminas/laminas-authentication": "^2.16.0",
+        "laminas/laminas-servicemanager": "^4.0",
+        "laminas/laminas-stdlib": "^3.7"
     },
     "require-dev": {
+        "laminas/laminas-coding-standard": "^3.0",
         "phpunit/phpunit": "^10.2",
-        "vimeo/psalm": "^5.13",
-        "laminas/laminas-coding-standard": "^2.5"
+        "vimeo/psalm": "^5.13"
     },
     "autoload": {
         "psr-4": {
@@ -46,7 +46,8 @@
     "scripts": {
         "check": [
             "@cs-check",
-            "@test"
+            "@test",
+            "@static-analysis"
         ],
         "cs-check": "phpcs",
         "cs-fix": "phpcbf",

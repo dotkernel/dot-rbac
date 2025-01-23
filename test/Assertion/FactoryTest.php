@@ -11,11 +11,13 @@ use Dot\Rbac\Assertion\Factory;
 use Dot\Rbac\Exception\RuntimeException;
 use PHPUnit\Framework\MockObject\Exception;
 use PHPUnit\Framework\TestCase;
+use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
 
 class FactoryTest extends TestCase
 {
     /**
+     * @throws ContainerExceptionInterface
      * @throws Exception
      */
     public function testCreateRuntimeException(): void
@@ -29,6 +31,7 @@ class FactoryTest extends TestCase
     }
 
     /**
+     * @throws ContainerExceptionInterface
      * @throws Exception
      */
     public function testCreate(): void
@@ -37,7 +40,7 @@ class FactoryTest extends TestCase
         $assertionPluginManager = $this->createMock(AssertionPluginManager::class);
 
         $assertionPluginManager->expects($this->once())
-            ->method('get')
+            ->method('build')
             ->with('testType', null)
             ->willReturn(new class implements AssertionInterface {
                 public function assert(AuthorizationInterface $authorization, mixed $context = null): bool

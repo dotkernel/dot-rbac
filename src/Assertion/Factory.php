@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Dot\Rbac\Assertion;
 
 use Dot\Rbac\Exception\RuntimeException;
+use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
 
 use function sprintf;
@@ -17,6 +18,9 @@ class Factory
     ) {
     }
 
+    /**
+     * @throws ContainerExceptionInterface
+     */
     public function create(array $specs): AssertionInterface
     {
         $type = $specs['type'] ?? '';
@@ -24,7 +28,7 @@ class Factory
             throw new RuntimeException(sprintf('Invalid assertion type `%s`', $type));
         }
 
-        return $this->getAssertionPluginManager()->get($type, $specs['options'] ?? null);
+        return $this->getAssertionPluginManager()->build($type, $specs['options'] ?? null);
     }
 
     public function getAssertionPluginManager(): AssertionPluginManager
