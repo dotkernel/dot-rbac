@@ -4,8 +4,14 @@ Rbac authorization model implements [dot-authorization](https://github.com/dotke
 
 The RBAC model defines roles that can be assigned to users. The authorization is done on a role basis, not user basis as in ACL. Each role can have one or multiple permissions/privileges assigned. When deciding if a user is authorized, the requested permission is checked in all user roles and if at least one role has that permission, access is granted.
 
+## Documentation
+
+Documentation is available at: https://docs.dotkernel.org/dot-rbac/.
+
+## Badges
+
 ![OSS Lifecycle](https://img.shields.io/osslifecycle/dotkernel/dot-rbac)
-![PHP from Packagist (specify version)](https://img.shields.io/packagist/php-v/dotkernel/dot-rbac/3.5.2)
+![PHP from Packagist (specify version)](https://img.shields.io/packagist/php-v/dotkernel/dot-rbac/3.6.0)
 
 [![GitHub issues](https://img.shields.io/github/issues/dotkernel/dot-rbac)](https://github.com/dotkernel/dot-rbac/issues)
 [![GitHub forks](https://img.shields.io/github/forks/dotkernel/dot-rbac)](https://github.com/dotkernel/dot-rbac/network)
@@ -14,8 +20,7 @@ The RBAC model defines roles that can be assigned to users. The authorization is
 
 [![Build Static](https://github.com/dotkernel/dot-rbac/actions/workflows/continuous-integration.yml/badge.svg?branch=3.0)](https://github.com/dotkernel/dot-rbac/actions/workflows/continuous-integration.yml)
 [![codecov](https://codecov.io/gh/dotkernel/dot-rbac/graph/badge.svg?token=GCK6C92N83)](https://codecov.io/gh/dotkernel/dot-rbac)
-
-[![SymfonyInsight](https://insight.symfony.com/projects/ce0cfbb2-7e97-427b-b394-531ff5be13d6/big.svg)](https://insight.symfony.com/projects/ce0cfbb2-7e97-427b-b394-531ff5be13d6)
+[![PHPStan](https://github.com/dotkernel/dot-rbac/actions/workflows/static-analysis.yml/badge.svg?branch=3.0)](https://github.com/dotkernel/dot-rbac/actions/workflows/static-analysis.yml)
 
 ## Installation
 
