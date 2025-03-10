@@ -11,7 +11,7 @@ Documentation is available at: https://docs.dotkernel.org/dot-rbac/.
 ## Badges
 
 ![OSS Lifecycle](https://img.shields.io/osslifecycle/dotkernel/dot-rbac)
-![PHP from Packagist (specify version)](https://img.shields.io/packagist/php-v/dotkernel/dot-rbac/3.6.0)
+![PHP from Packagist (specify version)](https://img.shields.io/packagist/php-v/dotkernel/dot-rbac/3.7.0)
 
 [![GitHub issues](https://img.shields.io/github/issues/dotkernel/dot-rbac)](https://github.com/dotkernel/dot-rbac/issues)
 [![GitHub forks](https://img.shields.io/github/forks/dotkernel/dot-rbac)](https://github.com/dotkernel/dot-rbac/network)

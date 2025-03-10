@@ -6,3 +6,10 @@ parameters:
         - src
         - test
     treatPhpDocTypesAsCertain: false
+    ignoreErrors:
+        - message: '#Call to method Laminas\\ServiceManager\\AbstractPluginManager<Laminas\\ServiceManager\\AbstractPluginManager>::validate\(\) with ''test'' will always evaluate to false.#'
+          path: test/Assertion/AssertionPluginManagerTest.php
+        - message: '#PHPDoc type class-string<Dot\\Rbac\\Role\\Provider\\RoleProviderInterface>\|null of property Dot\\Rbac\\Role\\Provider\\RoleProviderPluginManager::\$instanceOf is not covariant with PHPDoc type class-string<Laminas\\ServiceManager\\AbstractPluginManager>\|null of overridden property Laminas\\ServiceManager\\AbstractPluginManager<Laminas\\ServiceManager\\AbstractPluginManager>::\$instanceOf.#'
+          path: src/Role/Provider/RoleProviderPluginManager.php
+        - message: '#PHPDoc type class-string<Dot\\Rbac\\Assertion\\AssertionInterface>\|null of property Dot\\Rbac\\Assertion\\AssertionPluginManager::\$instanceOf is not covariant with PHPDoc type class-string<Laminas\\ServiceManager\\AbstractPluginManager>\|null of overridden property Laminas\\ServiceManager\\AbstractPluginManager<Laminas\\ServiceManager\\AbstractPluginManager>::\$instanceOf.#'
+          path: src/Assertion/AssertionPluginManager.php
