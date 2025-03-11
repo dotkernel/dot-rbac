@@ -11,6 +11,6 @@ use Laminas\ServiceManager\AbstractPluginManager;
  */
 class AssertionPluginManager extends AbstractPluginManager
 {
-    /** @var string  */
+    /** @var null|class-string<AssertionInterface> $instanceOf */
     protected $instanceOf = AssertionInterface::class;
 }

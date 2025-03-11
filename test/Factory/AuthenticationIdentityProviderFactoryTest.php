@@ -39,6 +39,6 @@ class AuthenticationIdentityProviderFactoryTest extends TestCase
             ]);
 
         $result = (new AuthenticationIdentityProviderFactory())($this->container);
-        $this->assertInstanceOf(AuthenticationIdentityProvider::class, $result);
+        $this->assertSame(AuthenticationIdentityProvider::class, $result::class);
     }
 }

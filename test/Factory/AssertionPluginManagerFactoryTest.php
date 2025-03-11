@@ -34,6 +34,6 @@ class AssertionPluginManagerFactoryTest extends TestCase
             ->willReturn($config);
 
         $result = (new AssertionPluginManagerFactory())($container);
-        $this->assertInstanceOf(AssertionPluginManager::class, $result);
+        $this->assertSame(AssertionPluginManager::class, $result::class);
     }
 }

@@ -12,7 +12,7 @@ use Laminas\ServiceManager\Factory\InvokableFactory;
  */
 class RoleProviderPluginManager extends AbstractPluginManager
 {
-    /** @var string  */
+    /** @var null|class-string<RoleProviderInterface> $instanceOf */
     protected $instanceOf = RoleProviderInterface::class;
 
     /** @var string[]  */

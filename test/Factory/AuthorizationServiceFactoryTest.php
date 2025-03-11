@@ -47,6 +47,6 @@ class AuthorizationServiceFactoryTest extends TestCase
         );
 
         $service = (new AuthorizationServiceFactory())($container);
-        $this->assertInstanceOf(AuthorizationService::class, $service);
+        $this->assertSame(AuthorizationService::class, $service::class);
     }
 }

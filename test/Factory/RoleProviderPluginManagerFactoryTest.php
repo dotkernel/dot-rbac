@@ -35,6 +35,6 @@ class RoleProviderPluginManagerFactoryTest extends TestCase
             ->willReturn($config);
 
         $service = (new RoleProviderPluginManagerFactory())($container);
-        $this->assertInstanceOf(RoleProviderPluginManager::class, $service);
+        $this->assertSame(RoleProviderPluginManager::class, $service::class);
     }
 }
