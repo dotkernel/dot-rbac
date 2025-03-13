@@ -44,7 +44,7 @@ class RoleServiceFactoryTest extends TestCase
 
         $service = (new RoleServiceFactory())($container);
 
-        $this->assertInstanceOf(RoleService::class, $service);
+        $this->assertSame(RoleService::class, $service::class);
     }
 
     /**

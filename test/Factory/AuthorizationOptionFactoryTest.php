@@ -28,6 +28,6 @@ class AuthorizationOptionFactoryTest extends TestCase
             ->willReturn(['dot_authorization' => null]);
 
         $interface = (new AuthorizationOptionsFactory())($container);
-        $this->assertInstanceOf(AuthorizationOptions::class, $interface);
+        $this->assertSame(AuthorizationOptions::class, $interface::class);
     }
 }
