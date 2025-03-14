@@ -51,7 +51,7 @@ class FactoryTest extends TestCase
         $subject = new Factory($container, $assertionPluginManager);
 
         $result = $subject->create(['type' => 'testType']);
-        $this->assertInstanceOf(AssertionInterface::class, $result);
+        $this->assertContainsOnlyInstancesOf(AssertionInterface::class, [$result]);
     }
 
     /**
@@ -65,6 +65,6 @@ class FactoryTest extends TestCase
         $subject = new Factory($container, $assertionPluginManager);
 
         $result = $subject->getAssertionPluginManager();
-        $this->assertInstanceOf(AssertionPluginManager::class, $result);
+        $this->assertContainsOnlyInstancesOf(AssertionPluginManager::class, [$result]);
     }
 }
