@@ -2,38 +2,46 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://docs.dotkernel.org/dot-rbac/</loc>
-         <lastmod>2025-01-28</lastmod>
+         <lastmod>2025-03-14</lastmod>
     </url>
     <url>
          <loc>https://docs.dotkernel.org/dot-rbac/v3/configuration/</loc>
-         <lastmod>2025-01-28</lastmod>
+         <lastmod>2025-03-14</lastmod>
     </url>
     <url>
          <loc>https://docs.dotkernel.org/dot-rbac/v3/customization/</loc>
-         <lastmod>2025-01-28</lastmod>
+         <lastmod>2025-03-14</lastmod>
     </url>
     <url>
          <loc>https://docs.dotkernel.org/dot-rbac/v3/installation/</loc>
-         <lastmod>2025-01-28</lastmod>
+         <lastmod>2025-03-14</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.dotkernel.org/dot-rbac/v3/overview/</loc>
+         <lastmod>2025-03-14</lastmod>
     </url>
     <url>
          <loc>https://docs.dotkernel.org/dot-rbac/v3/usage/</loc>
-         <lastmod>2025-01-28</lastmod>
+         <lastmod>2025-03-14</lastmod>
     </url>
     <url>
          <loc>https://docs.dotkernel.org/dot-rbac/v4/configuration/</loc>
-         <lastmod>2025-01-28</lastmod>
+         <lastmod>2025-03-14</lastmod>
     </url>
     <url>
          <loc>https://docs.dotkernel.org/dot-rbac/v4/customization/</loc>
-         <lastmod>2025-01-28</lastmod>
+         <lastmod>2025-03-14</lastmod>
     </url>
     <url>
          <loc>https://docs.dotkernel.org/dot-rbac/v4/installation/</loc>
-         <lastmod>2025-01-28</lastmod>
+         <lastmod>2025-03-14</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.dotkernel.org/dot-rbac/v4/overview/</loc>
+         <lastmod>2025-03-14</lastmod>
     </url>
     <url>
          <loc>https://docs.dotkernel.org/dot-rbac/v4/usage/</loc>
-         <lastmod>2025-01-28</lastmod>
+         <lastmod>2025-03-14</lastmod>
     </url>
 </urlset>
