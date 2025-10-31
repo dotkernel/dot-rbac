@@ -1,17 +1,21 @@
 # dot-rbac
 
-Rbac authorization model implements [dot-authorization](https://github.com/dotkernel/dot-authorization)'s `AuthorizationInterface`. An authorization service is responsible for deciding if the authenticated identity or guest has access to certain parts of the application.
+Rbac authorization model implements [dot-authorization](https://github.com/dotkernel/dot-authorization)'s `AuthorizationInterface`.
+An authorization service is responsible for deciding if the authenticated identity or guest has access to certain parts of the application.
 
-The RBAC model defines roles that can be assigned to users. The authorization is done on a role basis, not user basis as in ACL. Each role can have one or multiple permissions/privileges assigned. When deciding if a user is authorized, the requested permission is checked in all user roles and if at least one role has that permission, access is granted.
+The RBAC model defines roles that can be assigned to users.
+The authorization is done on a role basis, not a user basis as in ACL.
+Each role can have one or multiple permissions/privileges assigned.
+When deciding if a user is authorized, the requested permission is checked in all user roles, and if at least one role has that permission, access is granted.
 
 ## Documentation
 
-Documentation is available at: https://docs.dotkernel.org/dot-rbac/.
+Documentation is available at: https://docs.dotkernel.org/dot-rbac/v3/overview/.
 
 ## Badges
 
 ![OSS Lifecycle](https://img.shields.io/osslifecycle/dotkernel/dot-rbac)
-![PHP from Packagist (specify version)](https://img.shields.io/packagist/php-v/dotkernel/dot-rbac/3.7.0)
+![PHP from Packagist (specify version)](https://img.shields.io/packagist/php-v/dotkernel/dot-rbac/3.8.0)
 
 [![GitHub issues](https://img.shields.io/github/issues/dotkernel/dot-rbac)](https://github.com/dotkernel/dot-rbac/issues)
 [![GitHub forks](https://img.shields.io/github/forks/dotkernel/dot-rbac)](https://github.com/dotkernel/dot-rbac/network)
@@ -24,7 +28,7 @@ Documentation is available at: https://docs.dotkernel.org/dot-rbac/.
 
 ## Installation
 
-Run the following command in your project root directory
+Run the following command in your project root directory:
 
 ```bash
 $ composer require dotkernel/dot-rbac
@@ -32,9 +36,12 @@ $ composer require dotkernel/dot-rbac
 
 ## Configuration
 
-Even if the authorization service can be programmatically configured, we recommend using the configuration based approach. We further describe how to configure the module, using configuration file.
+Even if the authorization service can be programmatically configured, we recommend using the configuration-based approach.
+We further describe how to configure the module, using a configuration file.
 
-First of all, you should enable the module in your application by merging this package's `ConfigProvider` with your application's config. This ensures that all dependencies required by this module are registered in the service manager. It also defines default config values for this module.
+First, you should enable the module in your application by merging this package's `ConfigProvider` with your application's config.
+This ensures that all dependencies required by this module are registered in the service manager.
+It also defines default config values for this module.
 
 Create a configuration file in your `config/autoload` folder and change the module options as needed.
 
@@ -68,7 +75,7 @@ Create a configuration file in your `config/autoload` folder and change the modu
         ],
     ],
     
-    //example for a hierarchical model, less to write but it can be confusing sometimes
+    //example for a hierarchical model, less to write, but it can be confusing sometimes
     /*'role_provider' => [
         'type' => 'InMemory',
         'options' => [
@@ -106,7 +113,8 @@ Create a configuration file in your `config/autoload` folder and change the modu
 
 ## Usage
 
-Whenever you need to check if someone is authorized to take some actions, inject the `AuthorizationInterface::class` service into your class, then call the `isGranted` method with the correct parameters. There are 2 ways to call the isGranted method.
+Whenever you need to check if someone is authorized to take some actions, inject the `AuthorizationInterface::class` service into your class, then call the `isGranted` method with the correct parameters.
+There are two ways to call the isGranted method.
 
 ### First Method
 
@@ -118,7 +126,8 @@ $isGranted = $this->authorizationService->isGranted($permission, $roles);
 
 ### Second Method
 
-Do not specify the roles or send an empty array as the second parameter. This will check if the authenticated identity has permission.
+Do not specify the roles or send an empty array as the second parameter.
+This will check if the authenticated identity has permission.
 
 ```php
 $isGranted = $this->authorizationService->isGranted($permission);
@@ -128,22 +137,28 @@ $isGranted = $this->authorizationService->isGranted($permission);
 
 Whenever you request an authorization check on the authenticated identity, the identity will be provided to the `AuthorizationService` through a registered `IdentityProviderInterface` service.
 
-This is because identity is authentication dependent, so the module lets you overwrite this service, depending on your needs. If you want to get the identity from other sources instead of the dot-authentication service, just overwrite the `IdentityProviderInterface::class` service in the service manager with your own implementation of this interface.
+This is because identity is authentication-dependent, so the module lets you overwrite this service, depending on your needs.
+If you want to get the identity from other sources instead of the dot-authentication service, overwrite the `IdentityProviderInterface::class` service in the service manager with your own implementation of this interface.
 
 ## Custom role providers
 
-Write your own role provider by implementing the `RoleProviderInterface` and register it in the `RoleProviderPluginManager`. After that, you can use them in the configuration file, as described above.
+Write your own role provider by implementing the `RoleProviderInterface` and register it in the `RoleProviderPluginManager`.
+After that, you can use them in the configuration file, as described above.
 
 ## Creating assertions
 
-Assertions are checked after permission granting, right before returning the authorization result. Assertions can have a last word in deciding if someone is authorized for the requested action. A good assertion example could be an edit permission, but with the restriction that it should be able to edit the item just if the `user id` matches the item's `owner id`. It is up to you to write the logic inside an assertion.
+Assertions are checked after permission is granted, right before returning the authorization result.
+Assertions can have the last word in deciding if someone is authorized for the requested action.
+A good assertion example could be an edit permission, but with the restriction that it should be able to edit the item just if the `user id` matches the item's `owner id`.
+It is up to you to write the logic inside an assertion.
 
 An assertion has to implement the `AssertionInterface` and be registered in the `AssertionPluginManager`.
 
-This interface defines the following method
+This interface defines the following method:
 
 ```php
 public function assert(AuthorizationInterface $authorization, $context = null);
 ```
 
-The context variable can be any external data that an assertion needs in order to decide the authorization status. The assertion must return a boolean value, reflecting the assertion pass or failure status.
+The context variable can be any external data that an assertion needs to decide the authorization status.
+The assertion must return a boolean value, reflecting the assertion pass or failure status.
