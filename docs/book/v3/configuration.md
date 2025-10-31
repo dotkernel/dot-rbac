@@ -1,9 +1,9 @@
 # Configuration
 
-Even if the authorization service can be programmatically configured, we recommend using the configuration based approach.
-We further describe how to configure the module, using the configuration file.
+Even if the authorization service can be programmatically configured, we recommend using the configuration-based approach.
+We further describe how to configure the module using the configuration file.
 
-First of all, you should enable the module in your application by merging this package's `ConfigProvider` with your application's config.
+First, you should enable the module in your application by merging this package's `ConfigProvider` with your application's config.
 This ensures that all dependencies required by this module are registered in the service manager.
 It also defines default config values for this module.
 
@@ -39,7 +39,7 @@ Create a configuration file in your `config/autoload` folder and change the modu
         ],
     ],
     
-    //example for a hierarchical model, less to write but it can be confusing sometimes
+    //example for a hierarchical model, less to write, but it can be confusing sometimes
     /*'role_provider' => [
         'type' => 'InMemory',
         'options' => [
