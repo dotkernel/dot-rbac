@@ -1,7 +1,7 @@
 # Usage
 
 Whenever you need to check if someone is authorized to take some actions, inject the `AuthorizationInterface::class` service into your class, then call the `isGranted` method with the correct parameters.
-There are 2 ways to call the isGranted method.
+There are two ways to call the isGranted method.
 
 ## First method
 
