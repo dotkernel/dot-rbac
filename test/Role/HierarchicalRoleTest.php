@@ -4,26 +4,25 @@ declare(strict_types=1);
 
 namespace DotTest\Rbac\Role;
 
-use Dot\Authorization\Role\RoleInterface;
 use Dot\Rbac\Role\HierarchicalRole;
-use PHPUnit\Framework\MockObject\Exception;
+use Dot\Rbac\Role\Role;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
 
+#[CoversClass(HierarchicalRole::class)]
+#[UsesClass(Role::class)]
 class HierarchicalRoleTest extends TestCase
 {
-    /**
-     * @throws Exception
-     */
     public function testAccessors(): void
     {
-        $name = 'testName';
-
-        $hierarchicalRole = new HierarchicalRole($name);
-
+        $hierarchicalRole = new HierarchicalRole('parent');
         $this->assertFalse($hierarchicalRole->hasChildren());
-        $child = $this->createMock(RoleInterface::class);
+        $this->assertSame([], $hierarchicalRole->getChildren());
+
+        $child = new Role('child');
         $hierarchicalRole->addChild($child);
         $this->assertTrue($hierarchicalRole->hasChildren());
-        $this->assertIsArray($hierarchicalRole->getChildren());
+        $this->assertSame(['child' => $child], $hierarchicalRole->getChildren());
     }
 }

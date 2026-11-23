@@ -10,5 +10,8 @@ interface HierarchicalRoleInterface extends RoleInterface
 {
     public function hasChildren(): bool;
 
+    /**
+     * @return array<string, RoleInterface>
+     */
     public function getChildren(): array;
 }

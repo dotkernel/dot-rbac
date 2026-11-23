@@ -4,67 +4,73 @@ declare(strict_types=1);
 
 namespace DotTest\Rbac\Assertion;
 
-use Dot\Authorization\AuthorizationInterface;
-use Dot\Rbac\Assertion\AssertionInterface;
 use Dot\Rbac\Assertion\AssertionPluginManager;
 use Dot\Rbac\Assertion\Factory;
 use Dot\Rbac\Exception\RuntimeException;
-use PHPUnit\Framework\MockObject\Exception;
+use Dot\Rbac\Plugin\AbstractPluginManager;
+use Dot\Rbac\Plugin\InvokableFactory;
+use DotTest\Rbac\TestData\AllowAssertion;
+use DotTest\Rbac\TestData\Container;
+use DotTest\Rbac\TestData\ContextAssertion;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
-use Psr\Container\ContainerExceptionInterface;
-use Psr\Container\ContainerInterface;
 
+#[CoversClass(Factory::class)]
+#[UsesClass(AbstractPluginManager::class)]
+#[UsesClass(AssertionPluginManager::class)]
+#[UsesClass(InvokableFactory::class)]
 class FactoryTest extends TestCase
 {
-    /**
-     * @throws ContainerExceptionInterface
-     * @throws Exception
-     */
-    public function testCreateRuntimeException(): void
-    {
-        $container = $this->createMock(ContainerInterface::class);
-        $subject   = new Factory($container);
-
-        $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Invalid assertion type');
-        $subject->create([]);
-    }
-
-    /**
-     * @throws ContainerExceptionInterface
-     * @throws Exception
-     */
     public function testCreate(): void
     {
-        $container              = $this->createMock(ContainerInterface::class);
-        $assertionPluginManager = $this->createMock(AssertionPluginManager::class);
+        $manager = new AssertionPluginManager(new Container(), [
+            'factories' => [
+                AllowAssertion::class   => InvokableFactory::class,
+                ContextAssertion::class => InvokableFactory::class,
+            ],
+        ]);
+        $subject = new Factory(new Container(), $manager);
 
-        $assertionPluginManager->expects($this->once())
-            ->method('build')
-            ->with('testType', null)
-            ->willReturn(new class implements AssertionInterface {
-                public function assert(AuthorizationInterface $authorization, mixed $context = null): bool
-                {
-                    return true;
-                }
-            });
-        $subject = new Factory($container, $assertionPluginManager);
+        $this->assertInstanceOf(AllowAssertion::class, $subject->create(['type' => AllowAssertion::class]));
+        $this->assertInstanceOf(
+            ContextAssertion::class,
+            $subject->create(['type' => ContextAssertion::class, 'options' => ['allowed' => 'mine']])
+        );
+    }
 
-        $result = $subject->create(['type' => 'testType']);
-        $this->assertContainsOnlyInstancesOf(AssertionInterface::class, [$result]);
+    public function testGetAssertionPluginManager(): void
+    {
+        $manager = new AssertionPluginManager(new Container());
+        $this->assertSame($manager, (new Factory(new Container(), $manager))->getAssertionPluginManager());
+
+        $subject = new Factory(new Container());
+        $this->assertSame($subject->getAssertionPluginManager(), $subject->getAssertionPluginManager());
     }
 
     /**
-     * @throws Exception
+     * @return iterable<string, array{array<string, mixed>, string}>
      */
-    public function testGetAssertionPluginManager(): void
+    public static function invalidSpecsProvider(): iterable
     {
-        $container              = $this->createMock(ContainerInterface::class);
-        $assertionPluginManager = $this->createMock(AssertionPluginManager::class);
+        yield 'no type' => [[], 'Invalid assertion type of type null'];
+        yield 'empty type' => [['type' => ''], 'Invalid assertion type of type string'];
+        yield 'array type' => [['type' => ['x']], 'Invalid assertion type of type array'];
+        yield 'string options' => [
+            ['type' => AllowAssertion::class, 'options' => 'x'],
+            'Assertion options must be an array',
+        ];
+    }
 
-        $subject = new Factory($container, $assertionPluginManager);
-
-        $result = $subject->getAssertionPluginManager();
-        $this->assertContainsOnlyInstancesOf(AssertionPluginManager::class, [$result]);
+    /**
+     * @param array<string, mixed> $specs
+     */
+    #[DataProvider('invalidSpecsProvider')]
+    public function testCreateWithInvalidSpecsThrowsException(array $specs, string $message): void
+    {
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage($message);
+        (new Factory(new Container()))->create($specs);
     }
 }

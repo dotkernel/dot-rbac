@@ -6,34 +6,39 @@ namespace DotTest\Rbac\Factory;
 
 use Dot\Rbac\Assertion\AssertionPluginManager;
 use Dot\Rbac\Factory\AssertionPluginManagerFactory;
-use PHPUnit\Framework\MockObject\Exception;
+use Dot\Rbac\Plugin\AbstractPluginManager;
+use Dot\Rbac\Plugin\InvokableFactory;
+use DotTest\Rbac\TestData\AllowAssertion;
+use DotTest\Rbac\TestData\Container;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
-use Psr\Container\ContainerExceptionInterface;
-use Psr\Container\ContainerInterface;
-use Psr\Container\NotFoundExceptionInterface;
 
+#[CoversClass(AssertionPluginManagerFactory::class)]
+#[UsesClass(AbstractPluginManager::class)]
+#[UsesClass(AssertionPluginManager::class)]
 class AssertionPluginManagerFactoryTest extends TestCase
 {
-    /**
-     * @throws ContainerExceptionInterface
-     * @throws Exception
-     * @throws NotFoundExceptionInterface
-     */
     public function testCanCreateManager(): void
     {
-        $config    = [
-            'dot_authorization' => [
-                'assertion_manager' => [],
+        $container = new Container([
+            'config' => [
+                'dot_authorization' => [
+                    'assertion_manager' => [
+                        'factories' => [AllowAssertion::class => InvokableFactory::class],
+                    ],
+                ],
             ],
-        ];
-        $container = $this->createMock(ContainerInterface::class);
+        ]);
 
-        $container->expects($this->once())
-            ->method('get')
-            ->with('config')
-            ->willReturn($config);
+        $manager = (new AssertionPluginManagerFactory())($container);
+        $this->assertTrue($manager->has(AllowAssertion::class));
+    }
 
-        $result = (new AssertionPluginManagerFactory())($container);
-        $this->assertSame(AssertionPluginManager::class, $result::class);
+    public function testCanCreateManagerWithoutConfig(): void
+    {
+        $manager = (new AssertionPluginManagerFactory())(new Container(['config' => []]));
+
+        $this->assertFalse($manager->has(AllowAssertion::class));
     }
 }

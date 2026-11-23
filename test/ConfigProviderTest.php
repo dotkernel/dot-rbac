@@ -11,17 +11,21 @@ use Dot\Rbac\ConfigProvider;
 use Dot\Rbac\Identity\AuthenticationIdentityProvider;
 use Dot\Rbac\Identity\IdentityProviderInterface;
 use Dot\Rbac\Options\AuthorizationOptions;
+use Dot\Rbac\Rbac;
 use Dot\Rbac\RbacInterface;
 use Dot\Rbac\Role\Provider\RoleProviderPluginManager;
 use Dot\Rbac\Role\RoleService;
 use Dot\Rbac\Role\RoleServiceInterface;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
+#[CoversClass(ConfigProvider::class)]
 class ConfigProviderTest extends TestCase
 {
+    /** @var array<string, mixed> */
     protected array $config;
 
-    protected function setup(): void
+    protected function setUp(): void
     {
         $this->config = (new ConfigProvider())();
     }
@@ -29,17 +33,14 @@ class ConfigProviderTest extends TestCase
     public function testHasDependencies(): void
     {
         $this->assertArrayHasKey('dependencies', $this->config);
-    }
-
-    public function testHasDotAuthorization(): void
-    {
-        $this->assertArrayHasKey('dot_authorization', $this->config);
+        $this->assertSame((new ConfigProvider())->getDependencyConfig(), $this->config['dependencies']);
     }
 
     public function testDependenciesHasFactories(): void
     {
-        $this->assertArrayHasKey('factories', $this->config['dependencies']);
-        $factories = $this->config['dependencies']['factories'];
+        $factories = (new ConfigProvider())->getDependencyConfig()['factories'];
+
+        $this->assertArrayHasKey(Rbac::class, $factories);
         $this->assertArrayHasKey(AuthenticationIdentityProvider::class, $factories);
         $this->assertArrayHasKey(RoleProviderPluginManager::class, $factories);
         $this->assertArrayHasKey(RoleService::class, $factories);
@@ -48,23 +49,27 @@ class ConfigProviderTest extends TestCase
         $this->assertArrayHasKey(AuthorizationService::class, $factories);
     }
 
-    public function testDotAuthorizationHasConfig(): void
-    {
-        $config = $this->config['dot_authorization'];
-        $this->assertArrayHasKey('guest_role', $config);
-        $this->assertArrayHasKey('assertions', $config);
-        $this->assertArrayHasKey('assertion_manager', $config);
-        $this->assertArrayHasKey('role_provider', $config);
-        $this->assertArrayHasKey('role_provider_manager', $config);
-    }
-
     public function testDependenciesHasAliases(): void
     {
-        $this->assertArrayHasKey('aliases', $this->config['dependencies']);
-        $aliases = $this->config['dependencies']['aliases'];
-        $this->assertArrayHasKey(RbacInterface::class, $aliases);
-        $this->assertArrayHasKey(AuthorizationInterface::class, $aliases);
-        $this->assertArrayHasKey(RoleServiceInterface::class, $aliases);
-        $this->assertArrayHasKey(IdentityProviderInterface::class, $aliases);
+        $aliases = (new ConfigProvider())->getDependencyConfig()['aliases'];
+
+        $this->assertSame(Rbac::class, $aliases[RbacInterface::class]);
+        $this->assertSame(AuthorizationService::class, $aliases[AuthorizationInterface::class]);
+        $this->assertSame(RoleService::class, $aliases[RoleServiceInterface::class]);
+        $this->assertSame(AuthenticationIdentityProvider::class, $aliases[IdentityProviderInterface::class]);
+    }
+
+    public function testDotAuthorizationHasConfig(): void
+    {
+        $this->assertSame(
+            [
+                'guest_role'            => 'guest',
+                'assertions'            => [],
+                'assertion_manager'     => [],
+                'role_provider'         => [],
+                'role_provider_manager' => [],
+            ],
+            $this->config['dot_authorization']
+        );
     }
 }

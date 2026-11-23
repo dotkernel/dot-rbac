@@ -4,25 +4,20 @@ declare(strict_types=1);
 
 namespace Dot\Rbac\Role\Provider;
 
-use Laminas\ServiceManager\AbstractPluginManager;
-use Laminas\ServiceManager\Exception\InvalidServiceException;
-use Laminas\ServiceManager\Factory\InvokableFactory;
-
-use function gettype;
-use function is_object;
-use function sprintf;
+use Dot\Rbac\Plugin\AbstractPluginManager;
+use Dot\Rbac\Plugin\InvokableFactory;
 
 /**
- * @template-extends AbstractPluginManager<AbstractPluginManager>
+ * @extends AbstractPluginManager<RoleProviderInterface>
  */
 class RoleProviderPluginManager extends AbstractPluginManager
 {
-    protected string $instanceOf = RoleProviderInterface::class;
-
+    /** @var array<string, string|callable> */
     protected array $factories = [
         InMemoryRoleProvider::class => InvokableFactory::class,
     ];
 
+    /** @var array<string, string> */
     protected array $aliases = [
         'inmemoryroleprovider' => InMemoryRoleProvider::class,
         'inMemoryRoleProvider' => InMemoryRoleProvider::class,
@@ -32,15 +27,8 @@ class RoleProviderPluginManager extends AbstractPluginManager
         'InMemory'             => InMemoryRoleProvider::class,
     ];
 
-    public function validate(mixed $instance): void
+    protected function getInstanceOf(): string
     {
-        if (! $instance instanceof $this->instanceOf) {
-            throw new InvalidServiceException(sprintf(
-                '%s can only create instances of %s; %s is invalid',
-                static::class,
-                $this->instanceOf,
-                is_object($instance) ? $instance::class : gettype($instance)
-            ));
-        }
+        return RoleProviderInterface::class;
     }
 }

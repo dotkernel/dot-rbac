@@ -11,6 +11,7 @@ use Dot\Rbac\Factory\AssertionPluginManagerFactory;
 use Dot\Rbac\Factory\AuthenticationIdentityProviderFactory;
 use Dot\Rbac\Factory\AuthorizationOptionsFactory;
 use Dot\Rbac\Factory\AuthorizationServiceFactory;
+use Dot\Rbac\Factory\RbacFactory;
 use Dot\Rbac\Factory\RoleProviderPluginManagerFactory;
 use Dot\Rbac\Factory\RoleServiceFactory;
 use Dot\Rbac\Identity\AuthenticationIdentityProvider;
@@ -19,10 +20,12 @@ use Dot\Rbac\Options\AuthorizationOptions;
 use Dot\Rbac\Role\Provider\RoleProviderPluginManager;
 use Dot\Rbac\Role\RoleService;
 use Dot\Rbac\Role\RoleServiceInterface;
-use Laminas\ServiceManager\Factory\InvokableFactory;
 
 class ConfigProvider
 {
+    /**
+     * @return array<string, mixed>
+     */
     public function __invoke(): array
     {
         return [
@@ -37,11 +40,14 @@ class ConfigProvider
         ];
     }
 
+    /**
+     * @return array<string, array<string, string>>
+     */
     public function getDependencyConfig(): array
     {
         return [
             'factories' => [
-                Rbac::class                           => InvokableFactory::class,
+                Rbac::class                           => RbacFactory::class,
                 AuthenticationIdentityProvider::class => AuthenticationIdentityProviderFactory::class,
                 RoleProviderPluginManager::class      => RoleProviderPluginManagerFactory::class,
                 RoleService::class                    => RoleServiceFactory::class,
