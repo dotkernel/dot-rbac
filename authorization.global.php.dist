@@ -2,66 +2,70 @@
 
 declare(strict_types=1);
 
+use Dot\Rbac\Plugin\InvokableFactory;
+
 return [
     'dot_authorization' => [
-        //name of the guest role to use if no identity is provided
+        // the name of the guest role, used when there is no authenticated identity
         'guest_role' => 'guest',
 
+        // more role providers, in the same format as 'assertion_manager'
         'role_provider_manager' => [],
 
-        //example for a flat RBAC model using the InMemoryRoleProvider
+        // a flat RBAC model with the InMemoryRoleProvider
         'role_provider' => [
-            'type' => 'InMemory',
+            'type'    => 'InMemory',
             'options' => [
                 'roles' => [
                     'admin' => [
                         'permissions' => [
                             'edit',
                             'delete',
-                            //etc..
-                        ]
+                        ],
                     ],
-                    'user' => [
+                    'user'  => [
                         'permissions' => [
-                            //...
-                        ]
-                    ]
-                ]
+                            'view',
+                        ],
+                    ],
+                ],
             ],
         ],
 
-        //example for a hierarchical model, less to write but it can be confusing sometimes
+        // a hierarchical RBAC model: a role also gets the permissions of its child roles
         /*'role_provider' => [
-            'type' => 'InMemory',
+            'type'    => 'InMemory',
             'options' => [
                 'roles' => [
                     'admin' => [
-                        'children' => ['user'],
-                        'permissions' => ['create', 'delete']
+                        'children'    => ['user'],
+                        'permissions' => ['create', 'delete'],
                     ],
-                    'user' => [
-                        'children' => ['guest']
-                        'permissions' => ['edit']
-                    ]
+                    'user'  => [
+                        'children'    => ['guest'],
+                        'permissions' => ['edit'],
+                    ],
                     'guest' => [
-                        'permissions' => ['view']
-                    ]
-                ]
-            ]
+                        'permissions' => ['view'],
+                    ],
+                ],
+            ],
         ],*/
 
+        // the factories and aliases that create your assertions
         'assertion_manager' => [
             'factories' => [
-                //EditAssertion::class => InvokableFactory::class,
+                // App\Assertion\EditAssertion::class => InvokableFactory::class,
             ],
         ],
 
+        // the assertions and the permissions that they apply to
         'assertions' => [
-            [
-                'type' => EditAssertion::class,
+            /*[
+                'type'        => App\Assertion\EditAssertion::class,
                 'permissions' => ['edit'],
-                'options' => []
-            ]
-        ]
-    ]
+                'options'     => [],
+            ],*/
+        ],
+    ],
 ];

@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace Dot\Rbac\Role;
 
-use Dot\Authorization\Role\RoleInterface;
-
-class Role implements RoleInterface
+class Role implements PermissionRoleInterface
 {
+    /** @var array<string, string> */
     protected array $permissions = [];
 
     public function __construct(protected string $name)
@@ -19,6 +18,9 @@ class Role implements RoleInterface
         return $this->name;
     }
 
+    /**
+     * @return array<string, string>
+     */
     public function getPermissions(): array
     {
         return $this->permissions;

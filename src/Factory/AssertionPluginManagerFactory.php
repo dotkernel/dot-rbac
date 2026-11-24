@@ -17,7 +17,8 @@ class AssertionPluginManagerFactory
      */
     public function __invoke(ContainerInterface $container): AssertionPluginManager
     {
-        $config = $container->get('config')['dot_authorization']['assertion_manager'];
+        $config = $container->get('config')['dot_authorization']['assertion_manager'] ?? [];
+
         return new AssertionPluginManager($container, $config);
     }
 }

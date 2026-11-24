@@ -5,17 +5,18 @@ declare(strict_types=1);
 namespace Dot\Rbac\Authorization;
 
 use Dot\Authorization\AuthorizationInterface;
+use Dot\Authorization\Role\RoleInterface;
 use Dot\Rbac\Assertion\AssertionInterface;
 use Dot\Rbac\Assertion\Factory;
-use Dot\Rbac\Exception\RuntimeException;
+use Dot\Rbac\Exception\InvalidArgumentException;
 use Dot\Rbac\RbacInterface;
 use Dot\Rbac\Role\RoleServiceInterface;
 
 use function is_array;
-use function sprintf;
 
 class AuthorizationService implements AuthorizationInterface
 {
+    /** @var array<string, list<AssertionInterface|array<string, mixed>>> */
     protected array $assertions = [];
 
     public function __construct(
@@ -25,16 +26,13 @@ class AuthorizationService implements AuthorizationInterface
     ) {
     }
 
-    public function addAssertion(string $permission, mixed $assertion): void
+    /**
+     * @param AssertionInterface|array<string, mixed> $assertion
+     */
+    public function addAssertion(string $permission, AssertionInterface|array $assertion): void
     {
-        if (! is_array($assertion) && ! $assertion instanceof AssertionInterface) {
-            throw new RuntimeException(
-                sprintf('Assertion must be an array or an instance of `%s`', AssertionInterface::class)
-            );
-        }
-
-        if (! isset($this->assertions[$permission])) {
-            $this->assertions[$permission] = [];
+        if ($assertion === []) {
+            throw new InvalidArgumentException('An assertion specification must not be empty');
         }
 
         $this->assertions[$permission][] = $assertion;
@@ -45,13 +43,18 @@ class AuthorizationService implements AuthorizationInterface
         return $this->roleService->getIdentity();
     }
 
+    /**
+     * @param array<string|RoleInterface> $roles
+     */
     public function isGranted(string $permission, array $roles = [], mixed $context = null): bool
     {
-        if (empty($roles)) {
+        if ($roles === []) {
             $roles = $this->roleService->getIdentityRoles();
+        } else {
+            $roles = $this->roleService->resolveRoles($roles);
         }
 
-        if (empty($roles)) {
+        if ($roles === []) {
             return false;
         }
 
@@ -68,21 +71,24 @@ class AuthorizationService implements AuthorizationInterface
 
     public function hasAssertion(string $permission): bool
     {
-        return isset($this->assertions[$permission]) && ! empty($this->assertions[$permission]);
+        return ! empty($this->assertions[$permission]);
     }
 
+    /**
+     * @param array<AssertionInterface|array<string, mixed>> $assertions
+     */
     protected function assert(array $assertions, mixed $context = null): bool
     {
-        $allow = true;
         foreach ($assertions as $assertion) {
-            if (is_array($assertion) && ! empty($assertion)) {
+            if (is_array($assertion)) {
                 $assertion = $this->assertionFactory->create($assertion);
             }
 
-            if (($allow = $assertion->assert($this, $context)) === false) {
-                break;
+            if (! $assertion->assert($this, $context)) {
+                return false;
             }
         }
-        return $allow;
+
+        return true;
     }
 }

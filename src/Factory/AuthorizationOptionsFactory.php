@@ -17,6 +17,6 @@ class AuthorizationOptionsFactory
      */
     public function __invoke(ContainerInterface $container): AuthorizationOptions
     {
-        return new AuthorizationOptions($container->get('config')['dot_authorization']);
+        return new AuthorizationOptions($container->get('config')['dot_authorization'] ?? null);
     }
 }

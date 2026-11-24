@@ -4,15 +4,20 @@ declare(strict_types=1);
 
 namespace Dot\Rbac;
 
-use Dot\Rbac\Role\HierarchicalRoleInterface;
+use Dot\Authorization\Role\RoleInterface;
+use Dot\Rbac\Role\PermissionRoleInterface;
+use Dot\Rbac\Role\RoleFlattener;
 use Generator;
 
 class Rbac implements RbacInterface
 {
+    /**
+     * @param array<RoleInterface> $roles
+     */
     public function isGranted(string $permission, array $roles): bool
     {
         foreach ($this->flattenRoles($roles) as $role) {
-            if ($role->hasPermission($permission)) {
+            if ($role instanceof PermissionRoleInterface && $role->hasPermission($permission)) {
                 return true;
             }
         }
@@ -20,20 +25,12 @@ class Rbac implements RbacInterface
         return false;
     }
 
+    /**
+     * @param array<RoleInterface> $roles
+     * @return Generator<int, RoleInterface>
+     */
     protected function flattenRoles(array $roles): Generator
     {
-        foreach ($roles as $role) {
-            yield $role;
-
-            if (! $role instanceof HierarchicalRoleInterface) {
-                continue;
-            }
-
-            $children = $this->flattenRoles($role->getChildren());
-
-            foreach ($children as $child) {
-                yield $child;
-            }
-        }
+        return RoleFlattener::flatten($roles);
     }
 }

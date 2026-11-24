@@ -6,40 +6,40 @@ namespace DotTest\Rbac\Assertion;
 
 use Dot\Rbac\Assertion\AssertionInterface;
 use Dot\Rbac\Assertion\AssertionPluginManager;
-use Laminas\ServiceManager\Exception\InvalidServiceException;
-use PHPUnit\Framework\MockObject\Exception;
+use Dot\Rbac\Exception\InvalidArgumentException;
+use Dot\Rbac\Plugin\AbstractPluginManager;
+use Dot\Rbac\Plugin\InvokableFactory;
+use DotTest\Rbac\TestData\AllowAssertion;
+use DotTest\Rbac\TestData\Container;
+use DotTest\Rbac\TestData\IdentityProvider;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
-use Psr\Container\ContainerExceptionInterface;
-use Psr\Container\ContainerInterface;
 
+#[CoversClass(AssertionPluginManager::class)]
+#[UsesClass(AbstractPluginManager::class)]
+#[UsesClass(InvokableFactory::class)]
 class AssertionPluginManagerTest extends TestCase
 {
-    /**
-     * @throws ContainerExceptionInterface
-     * @throws Exception
-     */
-    public function testInstanceOf(): void
+    public function testBuildsAssertion(): void
     {
-        $container = $this->createMock(ContainerInterface::class);
-        $plugin    = $this->createMock(AssertionInterface::class);
+        $manager = new AssertionPluginManager(new Container(), [
+            'factories' => [AllowAssertion::class => InvokableFactory::class],
+        ]);
 
-        $this->expectNotToPerformAssertions();
-
-        $assertionPluginManager = new AssertionPluginManager($container);
-        $assertionPluginManager->validate($plugin);
+        $this->assertInstanceOf(AllowAssertion::class, $manager->build(AllowAssertion::class));
     }
 
-    /**
-     * @throws ContainerExceptionInterface
-     * @throws Exception
-     */
-    public function testInvalidInstanceOf(): void
+    public function testRejectsOtherInstances(): void
     {
-        $container = $this->createMock(ContainerInterface::class);
+        $manager = new AssertionPluginManager(new Container(), [
+            'factories' => [IdentityProvider::class => InvokableFactory::class],
+        ]);
 
-        $this->expectException(InvalidServiceException::class);
-
-        $assertionPluginManager = new AssertionPluginManager($container);
-        $assertionPluginManager->validate('test');
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage(
+            AssertionPluginManager::class . ' can only create instances of ' . AssertionInterface::class
+        );
+        $manager->build(IdentityProvider::class);
     }
 }

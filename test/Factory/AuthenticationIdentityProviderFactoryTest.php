@@ -6,39 +6,26 @@ namespace DotTest\Rbac\Factory;
 
 use Dot\Rbac\Factory\AuthenticationIdentityProviderFactory;
 use Dot\Rbac\Identity\AuthenticationIdentityProvider;
+use DotTest\Rbac\TestData\Container;
+use DotTest\Rbac\TestData\Identity;
 use Laminas\Authentication\AuthenticationService;
-use PHPUnit\Framework\MockObject\Exception;
-use PHPUnit\Framework\MockObject\MockObject;
+use Laminas\Authentication\Storage\NonPersistent;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
-use Psr\Container\ContainerExceptionInterface;
-use Psr\Container\ContainerInterface;
-use Psr\Container\NotFoundExceptionInterface;
 
+#[CoversClass(AuthenticationIdentityProviderFactory::class)]
+#[UsesClass(AuthenticationIdentityProvider::class)]
 class AuthenticationIdentityProviderFactoryTest extends TestCase
 {
-    private ContainerInterface|MockObject $container;
-
-    /**
-     * @throws Exception
-     */
-    public function setUp(): void
-    {
-        $this->container = $this->createMock(ContainerInterface::class);
-    }
-
-    /**
-     * @throws ContainerExceptionInterface
-     * @throws Exception
-     * @throws NotFoundExceptionInterface
-     */
     public function testWillCreateService(): void
     {
-        $this->container->method('get')
-            ->willReturnMap([
-                [AuthenticationService::class, $this->createMock(AuthenticationService::class)],
-            ]);
+        $identity = new Identity(['user']);
+        $storage  = new NonPersistent();
+        $storage->write($identity);
+        $container = new Container([AuthenticationService::class => new AuthenticationService($storage)]);
 
-        $result = (new AuthenticationIdentityProviderFactory())($this->container);
-        $this->assertSame(AuthenticationIdentityProvider::class, $result::class);
+        $provider = (new AuthenticationIdentityProviderFactory())($container);
+        $this->assertSame($identity, $provider->getIdentity());
     }
 }

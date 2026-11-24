@@ -5,36 +5,30 @@ declare(strict_types=1);
 namespace DotTest\Rbac\Factory;
 
 use Dot\Rbac\Factory\RoleProviderPluginManagerFactory;
+use Dot\Rbac\Plugin\AbstractPluginManager;
 use Dot\Rbac\Role\Provider\RoleProviderPluginManager;
-use PHPUnit\Framework\MockObject\Exception;
+use DotTest\Rbac\TestData\Container;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
-use Psr\Container\ContainerExceptionInterface;
-use Psr\Container\ContainerInterface;
-use Psr\Container\NotFoundExceptionInterface;
 
+#[CoversClass(RoleProviderPluginManagerFactory::class)]
+#[UsesClass(AbstractPluginManager::class)]
+#[UsesClass(RoleProviderPluginManager::class)]
 class RoleProviderPluginManagerFactoryTest extends TestCase
 {
-    /**
-     * @throws ContainerExceptionInterface
-     * @throws Exception
-     * @throws NotFoundExceptionInterface
-     */
     public function testCanCreate(): void
     {
-        $container = $this->createMock(ContainerInterface::class);
-
-        $config = [
-            'dot_authorization' => [
-                'role_provider_manager' => [],
+        $container = new Container([
+            'config' => [
+                'dot_authorization' => [
+                    'role_provider_manager' => ['aliases' => ['memory' => 'InMemory']],
+                ],
             ],
-        ];
+        ]);
 
-        $container->expects($this->once())
-            ->method('get')
-            ->with('config')
-            ->willReturn($config);
-
-        $service = (new RoleProviderPluginManagerFactory())($container);
-        $this->assertSame(RoleProviderPluginManager::class, $service::class);
+        $manager = (new RoleProviderPluginManagerFactory())($container);
+        $this->assertTrue($manager->has('InMemory'));
+        $this->assertFalse($manager->has('unknown'));
     }
 }

@@ -17,7 +17,8 @@ class RoleProviderPluginManagerFactory
      */
     public function __invoke(ContainerInterface $container): RoleProviderPluginManager
     {
-        $config = $container->get('config')['dot_authorization']['role_provider_manager'];
+        $config = $container->get('config')['dot_authorization']['role_provider_manager'] ?? [];
+
         return new RoleProviderPluginManager($container, $config);
     }
 }

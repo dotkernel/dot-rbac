@@ -6,28 +6,33 @@ namespace DotTest\Rbac\Factory;
 
 use Dot\Rbac\Factory\AuthorizationOptionsFactory;
 use Dot\Rbac\Options\AuthorizationOptions;
-use PHPUnit\Framework\MockObject\Exception;
+use DotTest\Rbac\TestData\Container;
+use DotTest\Rbac\TestData\ContainerException;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
-use Psr\Container\ContainerExceptionInterface;
-use Psr\Container\ContainerInterface;
-use Psr\Container\NotFoundExceptionInterface;
 
+#[CoversClass(AuthorizationOptionsFactory::class)]
+#[UsesClass(AuthorizationOptions::class)]
 class AuthorizationOptionFactoryTest extends TestCase
 {
-    /**
-     * @throws ContainerExceptionInterface
-     * @throws Exception
-     * @throws NotFoundExceptionInterface
-     */
-    public function testCanCreateInterface(): void
+    public function testCanCreateOptions(): void
     {
-        $container = $this->createMock(ContainerInterface::class);
-        $container->expects($this->once())
-            ->method('get')
-            ->with('config')
-            ->willReturn(['dot_authorization' => null]);
+        $container = new Container(['config' => ['dot_authorization' => ['guest_role' => 'visitor']]]);
 
-        $interface = (new AuthorizationOptionsFactory())($container);
-        $this->assertSame(AuthorizationOptions::class, $interface::class);
+        $this->assertSame('visitor', (new AuthorizationOptionsFactory())($container)->getGuestRole());
+    }
+
+    public function testCanCreateOptionsWithoutConfig(): void
+    {
+        $options = (new AuthorizationOptionsFactory())(new Container(['config' => []]));
+
+        $this->assertSame('guest', $options->getGuestRole());
+    }
+
+    public function testContainerExceptionIsNotCaught(): void
+    {
+        $this->expectException(ContainerException::class);
+        (new AuthorizationOptionsFactory())(new Container([], ['config']));
     }
 }
