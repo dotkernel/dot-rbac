@@ -16,7 +16,7 @@ class AuthenticationIdentityProviderTest extends TestCase
      */
     public function testGetIdentity(): void
     {
-        $identity             = $this->createMock(AuthenticationServiceInterface::class);
+        $identity             = $this->createStub(AuthenticationServiceInterface::class);
         $authIdentityProvider = new AuthenticationIdentityProvider($identity);
 
         $this->assertNull($authIdentityProvider->getIdentity());
