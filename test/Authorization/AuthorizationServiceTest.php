@@ -10,6 +10,7 @@ use Dot\Rbac\Exception\RuntimeException;
 use Dot\Rbac\Rbac;
 use Dot\Rbac\RbacInterface;
 use Dot\Rbac\Role\RoleServiceInterface;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 use PHPUnit\Framework\MockObject\Exception;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -25,12 +26,13 @@ class AuthorizationServiceTest extends TestCase
     public function setUp(): void
     {
         $this->rbac           = $this->createMock(RbacInterface::class);
-        $roleServiceInterface = $this->createMock(RoleServiceInterface::class);
-        $factory              = $this->createMock(Factory::class);
+        $roleServiceInterface = $this->createStub(RoleServiceInterface::class);
+        $factory              = $this->createStub(Factory::class);
 
         $this->authorizationService = new AuthorizationService($this->rbac, $roleServiceInterface, $factory);
     }
 
+    #[AllowMockObjectsWithoutExpectations]
     public function testAddAssertion(): void
     {
         $permission = 'testPermission';
@@ -40,6 +42,7 @@ class AuthorizationServiceTest extends TestCase
         $this->assertTrue($this->authorizationService->hasAssertion('testPermission'));
     }
 
+    #[AllowMockObjectsWithoutExpectations]
     public function testAddAssertionThrowException(): void
     {
         $permission = 'testPermission';
@@ -60,6 +63,7 @@ class AuthorizationServiceTest extends TestCase
         $this->assertTrue($result);
     }
 
+    #[AllowMockObjectsWithoutExpectations]
     public function testIsGrantedEmptyRoles(): void
     {
         $permission = 'testPermission';
@@ -68,6 +72,7 @@ class AuthorizationServiceTest extends TestCase
         $this->assertFalse($result);
     }
 
+    #[AllowMockObjectsWithoutExpectations]
     public function testRbacIsGrantedFalse(): void
     {
         $permission = 'testPermission';

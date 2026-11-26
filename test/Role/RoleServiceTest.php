@@ -9,6 +9,7 @@ use Dot\Rbac\Role\HierarchicalRole;
 use Dot\Rbac\Role\Provider\RoleProviderInterface;
 use Dot\Rbac\Role\Role;
 use Dot\Rbac\Role\RoleService;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 use PHPUnit\Framework\MockObject\Exception;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -23,12 +24,13 @@ class RoleServiceTest extends TestCase
      */
     public function setUp(): void
     {
-        $identityProvider   = $this->createMock(IdentityProviderInterface::class);
+        $identityProvider   = $this->createStub(IdentityProviderInterface::class);
         $this->roleProvider = $this->createMock(RoleProviderInterface::class);
 
         $this->roleService = new RoleService($identityProvider, $this->roleProvider);
     }
 
+    #[AllowMockObjectsWithoutExpectations]
     public function testMatchIdentityRoles(): void
     {
         $this->roleProvider->expects($this->any())->method('getRoles')
@@ -44,6 +46,7 @@ class RoleServiceTest extends TestCase
         $this->assertFalse($this->roleService->matchIdentityRoles($roles));
     }
 
+    #[AllowMockObjectsWithoutExpectations]
     public function testRoleServiceAccessor(): void
     {
         $this->roleService->setGuestRole('tester');
@@ -51,6 +54,7 @@ class RoleServiceTest extends TestCase
         $this->assertSame('tester', $result);
     }
 
+    #[AllowMockObjectsWithoutExpectations]
     public function testMatchIdentityRolesWithRole(): void
     {
         $this->roleProvider->expects($this->any())->method('getRoles')
