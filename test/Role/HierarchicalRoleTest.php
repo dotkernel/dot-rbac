@@ -21,7 +21,7 @@ class HierarchicalRoleTest extends TestCase
         $hierarchicalRole = new HierarchicalRole($name);
 
         $this->assertFalse($hierarchicalRole->hasChildren());
-        $child = $this->createMock(RoleInterface::class);
+        $child = $this->createStub(RoleInterface::class);
         $hierarchicalRole->addChild($child);
         $this->assertTrue($hierarchicalRole->hasChildren());
         $this->assertIsArray($hierarchicalRole->getChildren());

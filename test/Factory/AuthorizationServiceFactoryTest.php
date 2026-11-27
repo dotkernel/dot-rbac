@@ -10,6 +10,7 @@ use Dot\Rbac\Factory\AuthorizationServiceFactory;
 use Dot\Rbac\Options\AuthorizationOptions;
 use Dot\Rbac\RbacInterface;
 use Dot\Rbac\Role\RoleServiceInterface;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 use PHPUnit\Framework\MockObject\Exception;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerExceptionInterface;
@@ -23,14 +24,15 @@ class AuthorizationServiceFactoryTest extends TestCase
      * @throws Exception
      * @throws NotFoundExceptionInterface
      */
+    #[AllowMockObjectsWithoutExpectations]
     public function testWillCreateService(): void
     {
         $container = $this->createMock(ContainerInterface::class);
 
-        $rbac                   = $this->createMock(RbacInterface::class);
-        $roleService            = $this->createMock(RoleServiceInterface::class);
-        $assertionPluginManager = $this->createMock(AssertionPluginManager::class);
-        $moduleOptions          = $this->createMock(AuthorizationOptions::class);
+        $rbac                   = $this->createStub(RbacInterface::class);
+        $roleService            = $this->createStub(RoleServiceInterface::class);
+        $assertionPluginManager = $this->createStub(AssertionPluginManager::class);
+        $moduleOptions          = $this->createStub(AuthorizationOptions::class);
 
         $moduleOptions->method('getAssertions')->willReturn([
             'permissions' => ['test'],

@@ -8,6 +8,7 @@ use Dot\Rbac\Factory\RoleServiceFactory;
 use Dot\Rbac\Identity\IdentityProviderInterface;
 use Dot\Rbac\Options\AuthorizationOptions;
 use Dot\Rbac\Role\RoleService;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 use PHPUnit\Framework\MockObject\Exception;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerExceptionInterface;
@@ -22,12 +23,13 @@ class RoleServiceFactoryTest extends TestCase
      * @throws Exception
      * @throws NotFoundExceptionInterface
      */
+    #[AllowMockObjectsWithoutExpectations]
     public function testWillCreateService(): void
     {
         $container = $this->createMock(ContainerInterface::class);
 
-        $authorizationOptions = $this->createMock(AuthorizationOptions::class);
-        $identityProvider     = $this->createMock(IdentityProviderInterface::class);
+        $authorizationOptions = $this->createStub(AuthorizationOptions::class);
+        $identityProvider     = $this->createStub(IdentityProviderInterface::class);
         $authorizationOptions->method('getRoleProvider')->willReturn(
             [
                 'type'   => 'inmemoryroleprovider',
@@ -52,12 +54,13 @@ class RoleServiceFactoryTest extends TestCase
      * @throws Exception
      * @throws NotFoundExceptionInterface
      */
+    #[AllowMockObjectsWithoutExpectations]
     public function testWillNotCreateService(): void
     {
         $container = $this->createMock(ContainerInterface::class);
 
-        $authorizationOptions = $this->createMock(AuthorizationOptions::class);
-        $identityProvider     = $this->createMock(IdentityProviderInterface::class);
+        $authorizationOptions = $this->createStub(AuthorizationOptions::class);
+        $identityProvider     = $this->createStub(IdentityProviderInterface::class);
         $this->expectException(RuntimeException::class);
         $authorizationOptions->method('getRoleProvider')->willReturn([]);
 

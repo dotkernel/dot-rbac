@@ -12,6 +12,6 @@ The rbac authorization service decides if the authenticated identity or guest ha
 [![GitHub stars](https://img.shields.io/github/stars/dotkernel/dot-rbac)](https://github.com/dotkernel/dot-rbac/stargazers)
 [![GitHub license](https://img.shields.io/github/license/dotkernel/dot-rbac)](https://github.com/dotkernel/dot-rbac/blob/4.0/LICENSE.md)
 
-[![Build Static](https://github.com/dotkernel/dot-rbac/actions/workflows/continuous-integration.yml/badge.svg?branch=4.0)](https://github.com/dotkernel/dot-rbac/actions/workflows/continuous-integration.yml)
+[![Build Static](https://github.com/dotkernel/dot-rbac/actions/workflows/continuous-integration.yml/badge.svg?branch=4.x)](https://github.com/dotkernel/dot-rbac/actions/workflows/continuous-integration.yml)
 [![codecov](https://codecov.io/gh/dotkernel/dot-rbac/graph/badge.svg?token=GCK6C92N83)](https://codecov.io/gh/dotkernel/dot-rbac)
-[![PHPStan](https://github.com/dotkernel/dot-rbac/actions/workflows/static-analysis.yml/badge.svg?branch=4.0)](https://github.com/dotkernel/dot-rbac/actions/workflows/static-analysis.yml)
+[![PHPStan](https://github.com/dotkernel/dot-rbac/actions/workflows/static-analysis.yml/badge.svg?branch=4.x)](https://github.com/dotkernel/dot-rbac/actions/workflows/static-analysis.yml)

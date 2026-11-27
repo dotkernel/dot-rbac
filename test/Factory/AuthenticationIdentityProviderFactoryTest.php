@@ -23,7 +23,7 @@ class AuthenticationIdentityProviderFactoryTest extends TestCase
      */
     public function setUp(): void
     {
-        $this->container = $this->createMock(ContainerInterface::class);
+        $this->container = $this->createStub(ContainerInterface::class);
     }
 
     /**
@@ -35,7 +35,7 @@ class AuthenticationIdentityProviderFactoryTest extends TestCase
     {
         $this->container->method('get')
             ->willReturnMap([
-                [AuthenticationService::class, $this->createMock(AuthenticationService::class)],
+                [AuthenticationService::class, $this->createStub(AuthenticationService::class)],
             ]);
 
         $result = (new AuthenticationIdentityProviderFactory())($this->container);

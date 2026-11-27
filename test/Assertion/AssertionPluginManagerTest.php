@@ -20,8 +20,8 @@ class AssertionPluginManagerTest extends TestCase
      */
     public function testInstanceOf(): void
     {
-        $container = $this->createMock(ContainerInterface::class);
-        $plugin    = $this->createMock(AssertionInterface::class);
+        $container = $this->createStub(ContainerInterface::class);
+        $plugin    = $this->createStub(AssertionInterface::class);
 
         $this->expectNotToPerformAssertions();
 
@@ -35,7 +35,7 @@ class AssertionPluginManagerTest extends TestCase
      */
     public function testInvalidInstanceOf(): void
     {
-        $container = $this->createMock(ContainerInterface::class);
+        $container = $this->createStub(ContainerInterface::class);
 
         $this->expectException(InvalidServiceException::class);
 
